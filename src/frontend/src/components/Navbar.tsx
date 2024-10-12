@@ -3,17 +3,17 @@ import React from "react";
 const Navbar: React.FC = () => {
   return (
     <nav className="flex justify-between items-center h-20 p-4 bg-stone-100">
-      <div>
-        <a href="/" className="flex items-center">
+      <div className="flex items-center">
+        <a href="/search">
           <img src="/logo.svg" alt="Local.ly Logo" className="h-10 w-auto" />
         </a>
       </div>
 
-      <div className="absolute left-1/2 transform -translate-x-1/2 w-1/3">
+      <div className="absolute left-1/2 transform -translate-x-1/2 w-2/5">
         <input
           type="text"
           placeholder="Search for Businesses..."
-          className="w-full py-2 px-4 rounded-full bg-stone-300 text-black text-sm"
+          className="w-full py-2 px-4 rounded-full bg-stone-200 text-black text-sm"
         />
       </div>
 
