@@ -15,9 +15,11 @@ datasource db {
 
 model User {
   id         String     @id @default(uuid())
+  googleId   String     @unique
   name       String
   email      String     @unique
   businesses Business[]
+  coupons    Coupon[]
 }
 
 enum BusinessType {
@@ -44,10 +46,35 @@ model Business {
   name          String
   description   String?
   businessTypes BusinessType[]
+  promotions    Promotion[]
 }
 
 model Location {
   id       String     @id @default(uuid())
   Business Business[]
   address  String
+}
+
+enum PromotionType {
+  PERCENT_DISCOUNT
+  VALUE_DISCOUNT
+}
+
+model Promotion {
+  id         String        @id @default(uuid())
+  business   Business      @relation(fields: [businessId], references: [id])
+  businessId String
+  coupons    Coupon[]
+  quantity   Int
+  type       PromotionType
+  value      Float
+}
+
+// A coupon represents a promotion that has been redeemed by a user
+model Coupon {
+  id          String    @id @default(uuid())
+  promotion   Promotion @relation(fields: [promotionId], references: [id])
+  promotionId String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
 }
