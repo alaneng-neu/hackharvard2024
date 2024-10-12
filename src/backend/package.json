@@ -4,7 +4,12 @@
   "private": true,
   "main": "index.ts",
   "scripts": {
-    "start": "yarn nodemon index.ts"
+    "start": "yarn nodemon index.ts",
+    "prisma:reset": "yarn prisma migrate reset",
+    "prisma:migrate": "yarn prisma migrate dev",
+    "prisma:migrate:prod": "yarn prisma migrate deploy",
+    "prisma:generate": "yarn prisma generate",
+    "prisma:studio": "yarn prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",

@@ -10,7 +10,11 @@
   "scripts": {
     "start": "concurrently -k -p \"[{name}]\" -n \"Express,React\" -c \"bgBlue.bold,bgCyan.bold\" \"yarn backend\" \"yarn frontend\"",
     "frontend": "yarn workspace frontend dev",
-    "backend": "yarn workspace backend start"
+    "backend": "yarn workspace backend start",
+    "prisma:reset": "yarn workspace backend prisma:reset",
+    "prisma:migrate": "yarn workspace backend prisma:migrate",
+    "prisma:generate": "yarn workspace backend prisma:generate",
+    "prisma:studio": "yarn workspace backend prisma:studio"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

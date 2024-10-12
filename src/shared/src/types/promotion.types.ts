@@ -18,4 +18,5 @@ export interface Coupon {
   id: string;
   promotion: Promotion;
   user: User;
+  redeemedAt: Date | undefined;
 }

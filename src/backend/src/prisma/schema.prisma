@@ -77,4 +77,5 @@ model Coupon {
   promotionId String
   user        User      @relation(fields: [userId], references: [id])
   userId      String
+  redeemedAt  DateTime?
 }
