@@ -7,12 +7,12 @@ const Login: React.FC = () => {
           <img
             src="/logo_white.svg"
             alt="Local.ly Logo"
-            className="h-10 w-auto"
+            className="h-10 mb-3 w-auto"
           />
         </a>
       </div>
       <div className="relative flex items-center justify-center h-screen">
-        <span className="absolute text-black text-5xl mb-[20rem]">Sign in</span>
+        <span className="absolute text-black text-3xl mb-[18rem]">Sign in</span>
         <img src="/gem.svg" className="absolute h-12 w-35 mb-[10rem]"></img>
         <button className="flex items-center bg-white text-gray-800 border border-gray-300 rounded-lg shadow-md p-3 hover:bg-gray-100 transition duration-200">
           <img
