@@ -1,0 +1,29 @@
+import React from "react";
+
+const Navbar: React.FC = () => {
+  return (
+    <nav className="flex justify-between items-center h-20 p-4 bg-stone-100">
+      <div>
+        <a href="/" className="flex items-center">
+          <img src="/logo.svg" alt="Local.ly Logo" className="h-10 w-auto" />
+        </a>
+      </div>
+
+      <div className="absolute left-1/2 transform -translate-x-1/2 w-1/3">
+        <input
+          type="text"
+          placeholder="Search for Businesses..."
+          className="w-full py-2 px-4 rounded-full bg-stone-300 text-black text-sm"
+        />
+      </div>
+
+      <div>
+        <button className="bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200">
+          Login
+        </button>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
