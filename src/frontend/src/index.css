@@ -4,14 +4,14 @@
 
 @font-face {
   font-family: 'Uber Move';
-  src: url('./fonts/UberMove-Regular.otf') format('opentype'); /* Regular font */
+  src: url('./fonts/UberMove-Regular.woff') format('opentype'); /* Regular font */
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Uber Move';
-  src: url('./fonts/UberMove-Bold.otf') format('opentype'); /* Bold font */
+  src: url('./fonts/UberMove-Bold.woff') format('opentype'); /* Bold font */
   font-weight: bold;
   font-style: normal;
 }
