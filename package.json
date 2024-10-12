@@ -8,6 +8,11 @@
     "src/backend"
   ],
   "scripts": {
-    "start": "yarn workspace frontend dev"
+    "start": "concurrently -k -p \"[{name}]\" -n \"Express,React\" -c \"bgBlue.bold,bgCyan.bold\" \"yarn backend\" \"yarn frontend\"",
+    "frontend": "yarn workspace frontend dev",
+    "backend": "yarn workspace backend start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

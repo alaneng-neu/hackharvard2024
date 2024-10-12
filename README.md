@@ -1,8 +1,13 @@
 # hackharvard2024
 
-Setup Instructions
+Pre-requisites
+- Node.js 18+
+- Yarn (install with `sudo npm i -g yarn`)
+- Docker Desktop/Engine
 
-1. install node 18
-2. install yarn (sudo npm i -g yarn)
-3. `yarn install`
-4. `yarn start`
+Install Dependencies and Start App
+
+- Install dependencies: `yarn install`
+- Start app (frontend and backend): `yarn start`
+- Start frontend only: `yarn frontend`
+- Start backend only: `yarn backend`
