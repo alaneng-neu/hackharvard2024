@@ -1,7 +1,10 @@
 {
-  "name": "backend",
+  "name": "hackharvard2024",
   "version": "1.0.0",
-  "main": "index.ts",
+  "private": true,
   "license": "MIT",
-  "private": true
+  "workspaces": [
+    "src/backend",
+    "src/frontend"
+  ]
 }
