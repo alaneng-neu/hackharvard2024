@@ -33,7 +33,9 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
         <span className="ml-2">&#9662;</span> {/* Dropdown arrow */}
       </button>
       {isOpen && (
-        <ul className="absolute left-0 w-full bg-white border border-t-0 border-gray-300 rounded-b-lg max-h-60 overflow-y-auto z-10">
+        <ul
+          className={`absolute left-0 w-${width} bg-white border border-t-0 border-gray-300 rounded-b-lg max-h-60 overflow-y-auto z-10`}
+        >
           {options.map((option) => (
             <li
               key={option}
