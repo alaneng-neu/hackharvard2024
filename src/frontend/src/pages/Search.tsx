@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar.tsx";
 import DropdownFilter from "../components/DropdownFilter.tsx";
+import ToggleFilter from "../components/ToggleFilter.tsx";
 
 const categories = [
   "Dining",
@@ -22,8 +23,9 @@ const Search: React.FC = () => {
       <div className="flex justify-center">
         <main className="w-3/5">
           <div className="flex justify-between py-6">
-            <div>
+            <div className="flex gap-4">
               <DropdownFilter options={categories} label="Select a Category" />
+              <ToggleFilter label="Promotions" />
             </div>
             <button>Clear Filters</button>
           </div>
