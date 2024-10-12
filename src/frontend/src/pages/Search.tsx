@@ -24,7 +24,11 @@ const Search: React.FC = () => {
         <main className="w-3/5">
           <div className="flex justify-between py-6">
             <div className="flex gap-4">
-              <DropdownFilter options={categories} label="Select a Category" />
+              <DropdownFilter
+                options={categories}
+                label="Select a Category"
+                width="60"
+              />
               <ToggleFilter label="Promotions" />
             </div>
             <button>Clear Filters</button>

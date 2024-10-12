@@ -3,9 +3,14 @@ import React, { useState } from "react";
 interface DropdownFilterProps {
   options: string[];
   label: string;
+  width: string;
 }
 
-const DropdownFilter: React.FC<DropdownFilterProps> = ({ options, label }) => {
+const DropdownFilter: React.FC<DropdownFilterProps> = ({
+  options,
+  label,
+  width,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
@@ -17,7 +22,7 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({ options, label }) => {
   return (
     <div className="relative">
       <button
-        className={`flex items-center justify-between w-60 p-2 ${
+        className={`flex items-center justify-between p-2 w-${width} ${
           isOpen
             ? "border-l border-r border-t rounded-t-lg"
             : "border rounded-lg"
