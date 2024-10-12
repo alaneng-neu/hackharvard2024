@@ -1,0 +1,13 @@
+{
+  "name": "hackharvard2024",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "src/frontend",
+    "src/backend"
+  ],
+  "scripts": {
+    "start": "yarn workspace frontend dev"
+  }
+}
