@@ -19,7 +19,7 @@ const Landing: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col justify-center items-start flex-grow text-white w-full max-w-4xl mx-auto text-left -mx-2 pl-20">
+      <div className="flex flex-col justify-center items-start flex-grow text-white w-full max-w-4xl text-left pl-20">
         {" "}
         {/* Added negative margin */}
         <h2 className="text-5xl font-bold mb-8 text-black">
