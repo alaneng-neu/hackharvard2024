@@ -3,7 +3,7 @@
   <defs>
     <style>
       .cls-1, .cls-2, .cls-3 {
-        font-family: UberMove-Bold, 'Uber Move';
+        font-family: UberMoveBold, 'Uber Move';
         font-weight: 700;
       }
 
