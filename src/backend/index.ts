@@ -8,7 +8,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/businesses", businessRouter);
+app.use("/business", businessRouter);
 
 app.use(errorHandler);
 

@@ -6,6 +6,7 @@ const businessRouter = Router();
 businessRouter.post("/new", BusinessController.createNewBusiness);
 
 businessRouter.get("/search", BusinessController.getAllBusinesses);
+businessRouter.get("/types", BusinessController.getBusinessTypes);
 
 businessRouter.get("/:businessId/get", BusinessController.getBusiness);
 businessRouter.get("/:businessId/edit", BusinessController.editBusiness);

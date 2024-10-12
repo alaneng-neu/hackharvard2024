@@ -37,6 +37,20 @@ export default class BusinessController {
     }
   }
 
+  static async getBusinessTypes(
+    _req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const businessTypes = await BusinessService.getBusinessTypes();
+
+      res.status(200).json(businessTypes);
+    } catch (err: unknown) {
+      next(err);
+    }
+  }
+
   static async getBusiness(req: Request, res: Response, next: NextFunction) {
     try {
       const businessId = req.params.businessId;

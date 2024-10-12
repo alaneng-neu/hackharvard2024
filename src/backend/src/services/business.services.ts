@@ -1,5 +1,5 @@
 import prisma from "../prisma/prisma";
-import { Business, Promotion } from "../../../shared";
+import { Business, BusinessType, Promotion } from "../../../shared";
 import { businessTransformer } from "../transformers/business.transformers";
 import { promotionTransformer } from "../transformers/promotion.transformers";
 import { stringToBusinessType } from "../utils/business.utils";
@@ -63,6 +63,10 @@ export default class BusinessService {
     });
 
     return businessTransformer(business);
+  }
+
+  static async getBusinessTypes(): Promise<string[]> {
+    return Object.values(BusinessType);
   }
 
   static async editBusiness(
