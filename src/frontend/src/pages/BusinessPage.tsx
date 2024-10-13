@@ -14,65 +14,14 @@ const BusinessPage: React.FC = () => {
   const [business, setBusiness] = useState<Business>();
 
   useEffect(() => {
-    // fetch(`http://localhost:7071/business/${id}/get`)
-    //   .then((res) => res.json())
-    //   .then((data: Business) => {
-    //     setBusiness(data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    const location: Location = { address: "Boston, MA" };
-    const dummyBusiness: Business = {
-      id: "1",
-      name: "Sunset Diner",
-      description: "A classic spot for breakfast and brunch.",
-      businessTypes: [BusinessType.FOOD_AND_BEVERAGE],
-      location: { address: "123 Main St, Springfield" },
-      promotions: [],
-    };
-
-    const testBusiness: Business = {
-      id: "2",
-      location,
-      name: "Name of business",
-      description: "Description",
-      businessTypes: [BusinessType.FOOD_AND_BEVERAGE],
-      promotions: [
-        {
-          id: "1",
-          business: dummyBusiness,
-          quantity: 1,
-          type: PromotionType.PERCENT_DISCOUNT,
-          value: 1,
-        },
-      ],
-    };
-    const testBusiness2: Business = {
-      id: "2",
-      location,
-      name: "Name of business",
-      description: "Description",
-      businessTypes: [BusinessType.FOOD_AND_BEVERAGE],
-      promotions: [
-        {
-          id: "1",
-          business: testBusiness,
-          quantity: 1,
-          type: PromotionType.PERCENT_DISCOUNT,
-          value: 1,
-        },
-      ],
-    };
-    const dummyBusiness2: Business = {
-      id: "2",
-      name: "Sunset Diner",
-      description: "A classic spot for breakfast and brunch.",
-      businessTypes: [BusinessType.FOOD_AND_BEVERAGE],
-      location: { address: "123 Main St, Springfield" },
-      promotions: testBusiness2.promotions,
-    };
-    setBusiness(dummyBusiness2);
+    fetch(`http://localhost:7071/business/${id}/get`)
+      .then((res) => res.json())
+      .then((data: Business) => {
+        setBusiness(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [id]);
 
   return (
