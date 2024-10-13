@@ -1,3 +1,5 @@
+import { Promotion } from "./promotion.types";
+
 export interface Location {
   address: string;
 }
@@ -22,4 +24,5 @@ export interface Business {
   name: string;
   description: string | undefined;
   businessTypes: BusinessType[];
+  promotions: Promotion[];
 }

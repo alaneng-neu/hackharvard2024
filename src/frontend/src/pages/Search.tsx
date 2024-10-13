@@ -3,8 +3,13 @@ import Navbar from "../components/Navbar.tsx";
 import DropdownFilter from "../components/DropdownFilter.tsx";
 import ToggleFilter from "../components/ToggleFilter.tsx";
 import BusinessCard from "../components/BusinessCard";
-import { Business, BusinessType } from "../../../shared/index.ts";
+import {
+  Business,
+  BusinessType,
+  PromotionType,
+} from "../../../shared/index.ts";
 
+// TODO: Fetch from API
 const categories = [
   "Dining",
   "Retail",
@@ -18,6 +23,17 @@ const categories = [
   "Non-Profit",
 ];
 
+// TODO: Fetch from API
+const dummyBusiness: Business = {
+  id: "1",
+  name: "Sunset Diner",
+  description: "A classic spot for breakfast and brunch.",
+  businessTypes: [BusinessType.FOOD_AND_BEVERAGE],
+  location: { address: "123 Main St, Springfield" },
+  promotions: [],
+};
+
+// TODO: Fetch from API
 const testBusinesses: Business[] = [
   {
     id: "1",
@@ -25,8 +41,22 @@ const testBusinesses: Business[] = [
     description: "A classic spot for breakfast and brunch.",
     businessTypes: [BusinessType.FOOD_AND_BEVERAGE],
     location: { address: "123 Main St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
-    specialOffer: "20% off pancakes!",
+    promotions: [
+      {
+        id: "1",
+        business: dummyBusiness,
+        quantity: 5,
+        type: PromotionType.VALUE_DISCOUNT,
+        value: 10,
+      },
+      {
+        id: "2",
+        business: dummyBusiness,
+        quantity: 5,
+        type: PromotionType.PERCENT_DISCOUNT,
+        value: 15,
+      },
+    ],
   },
   {
     id: "2",
@@ -34,7 +64,7 @@ const testBusinesses: Business[] = [
     description: "Your one-stop shop for the latest gadgets.",
     businessTypes: [BusinessType.RETAIL],
     location: { address: "456 Elm St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
+    promotions: [],
   },
   {
     id: "3",
@@ -43,8 +73,15 @@ const testBusinesses: Business[] = [
       "Get fit and stay healthy with our state-of-the-art facilities.",
     businessTypes: [BusinessType.HEALTH_AND_WELLNESS],
     location: { address: "789 Maple St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
-    specialOffer: "Free 1-day trial!",
+    promotions: [
+      {
+        id: "3",
+        business: dummyBusiness,
+        quantity: 5,
+        type: PromotionType.PERCENT_DISCOUNT,
+        value: 8,
+      },
+    ],
   },
   {
     id: "4",
@@ -52,7 +89,7 @@ const testBusinesses: Business[] = [
     description: "Trendy clothing for all seasons.",
     businessTypes: [BusinessType.CLOTHING_AND_ACCESSORIES],
     location: { address: "101 Oak St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
+    promotions: [],
   },
   {
     id: "5",
@@ -60,7 +97,7 @@ const testBusinesses: Business[] = [
     description: "Personalized tutoring services for all ages.",
     businessTypes: [BusinessType.EDUCATION],
     location: { address: "202 Pine St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
+    promotions: [],
   },
   {
     id: "6",
@@ -68,7 +105,7 @@ const testBusinesses: Business[] = [
     description: "Sustainable and fresh gardening supplies.",
     businessTypes: [BusinessType.RETAIL],
     location: { address: "303 Cedar St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
+    promotions: [],
   },
   {
     id: "7",
@@ -76,7 +113,7 @@ const testBusinesses: Business[] = [
     description: "Tech consulting for modern businesses.",
     businessTypes: [BusinessType.TECHNOLOGY],
     location: { address: "404 Birch St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
+    promotions: [],
   },
   {
     id: "8",
@@ -84,7 +121,7 @@ const testBusinesses: Business[] = [
     description: "Non-profit organization supporting local initiatives.",
     businessTypes: [BusinessType.NON_PROFIT],
     location: { address: "505 Willow St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
+    promotions: [],
   },
   {
     id: "9",
@@ -92,8 +129,7 @@ const testBusinesses: Business[] = [
     description: "Relax and unwind with our full range of spa services.",
     businessTypes: [BusinessType.SERVICES],
     location: { address: "606 Poplar St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
-    specialOffer: "10% off massages!",
+    promotions: [],
   },
   {
     id: "10",
@@ -101,8 +137,7 @@ const testBusinesses: Business[] = [
     description: "Handcrafted bread and pastries fresh daily.",
     businessTypes: [BusinessType.RETAIL],
     location: { address: "707 Chestnut St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
-    specialOffer: "Buy 2 get 1 free!",
+    promotions: [],
   },
   {
     id: "11",
@@ -110,8 +145,7 @@ const testBusinesses: Business[] = [
     description: "Personal training and group fitness classes.",
     businessTypes: [BusinessType.HEALTH_AND_WELLNESS],
     location: { address: "808 Walnut St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
-    specialOffer: "Free first session!",
+    promotions: [],
   },
   {
     id: "12",
@@ -119,7 +153,7 @@ const testBusinesses: Business[] = [
     description: "Innovative tech solutions for your business.",
     businessTypes: [BusinessType.TECHNOLOGY],
     location: { address: "909 Aspen St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
+    promotions: [],
   },
   {
     id: "13",
@@ -127,8 +161,7 @@ const testBusinesses: Business[] = [
     description: "A paradise for book lovers with a vast collection.",
     businessTypes: [BusinessType.RETAIL],
     location: { address: "1010 Pinecone St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
-    specialOffer: "10% off on all novels!",
+    promotions: [],
   },
   {
     id: "14",
@@ -136,8 +169,7 @@ const testBusinesses: Business[] = [
     description: "Luxury spa services in the heart of the city.",
     businessTypes: [BusinessType.SERVICES],
     location: { address: "1111 Maplewood St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
-    specialOffer: "15% off your first massage!",
+    promotions: [],
   },
   {
     id: "15",
@@ -145,7 +177,7 @@ const testBusinesses: Business[] = [
     description: "Sustainable products for everyday living.",
     businessTypes: [BusinessType.RETAIL],
     location: { address: "1212 Oakleaf St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
+    promotions: [],
   },
   {
     id: "16",
@@ -153,8 +185,7 @@ const testBusinesses: Business[] = [
     description: "Art workshops and creative classes for all ages.",
     businessTypes: [BusinessType.EDUCATION],
     location: { address: "1313 Pine St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
-    specialOffer: "20% off on first class!",
+    promotions: [],
   },
   {
     id: "17",
@@ -162,8 +193,7 @@ const testBusinesses: Business[] = [
     description: "Comprehensive healthcare services for the community.",
     businessTypes: [BusinessType.HEALTH_AND_WELLNESS],
     location: { address: "1414 Cedar St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
-    specialOffer: "Free consultation!",
+    promotions: [],
   },
   {
     id: "18",
@@ -171,12 +201,12 @@ const testBusinesses: Business[] = [
     description: "Eco-friendly technology for modern businesses.",
     businessTypes: [BusinessType.TECHNOLOGY],
     location: { address: "1515 Birch St, Springfield" },
-    imageUrl: "https://via.placeholder.com/150",
+    promotions: [],
   },
 ];
 
 const Search: React.FC = () => {
-  const [businesses] = useState<Business[]>(testBusinesses);
+  const [businesses, setBusinesses] = useState<Business[]>(testBusinesses);
 
   return (
     <div>
