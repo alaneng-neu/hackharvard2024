@@ -7,6 +7,7 @@ import { couponTransformer } from "./coupon.transformers";
 export const userTransformer = (
   user: Prisma.UserGetPayload<typeof userQueryArgs>
 ): User => {
+  if (!user) return null;
   return {
     ...user,
     businesses: user.businesses.map(businessTransformer),

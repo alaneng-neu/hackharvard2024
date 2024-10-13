@@ -35,6 +35,7 @@ const BusinessPage = () => {
   };
 
   const handleRedeemPromo = (promotionId: string) => {
+    console.log(promotionId);
     fetch(`http://localhost:7071/business/${id}/promos/${promotionId}/redeem`, {
       method: "POST",
       headers: {
@@ -43,7 +44,7 @@ const BusinessPage = () => {
       credentials: "include",
     })
       .then((response) => response.json())
-      .then((data: Coupon) => {
+      .then((data) => {
         const couponId = data.id;
         window.location.href = `/business/${id}/promo/${couponId}`;
       })

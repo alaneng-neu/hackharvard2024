@@ -28,9 +28,9 @@ const App: React.FC = () => {
           path="/business/:id/promo/create"
           element={<CreatePromoPage />}
         />
-        <Route path="/business/:id/promo/:couponId" element={<CouponInfo />} />
+        <Route path="/business/promos/:couponId" element={<CouponInfo />} />
         <Route
-          path="/business/:id/promo/:couponId/redeem"
+          path="/business/:id/promos/:couponId/redeem"
           element={<BusinessCoupon />}
         />
         <Route path="*" element={<NotFound />} />

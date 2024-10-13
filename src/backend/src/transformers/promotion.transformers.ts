@@ -6,6 +6,7 @@ import { promotionQueryArgs } from "../prisma-query-args/promotion.query-args";
 export const promotionTransformer = (
   promotion: Prisma.PromotionGetPayload<typeof promotionQueryArgs>
 ): Promotion => {
+  if (!promotion) return null;
   return {
     ...promotion,
     business: businessTransformer(promotion.business),

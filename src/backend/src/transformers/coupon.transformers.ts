@@ -7,6 +7,7 @@ import { userTransformer } from "./user.transformers";
 export const couponTransformer = (
   coupon: Prisma.CouponGetPayload<typeof couponQueryArgs>
 ): Coupon => {
+  if (!coupon) return null;
   return {
     ...coupon,
     promotion: promotionTransformer(coupon.promotion),

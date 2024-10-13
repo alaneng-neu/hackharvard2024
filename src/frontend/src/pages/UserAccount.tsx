@@ -50,16 +50,15 @@ const CouponCarousel: React.FC<CouponCarouselProps> = ({ coupons }) => {
         <div
           ref={containerRef}
           className="flex transition-transform duration-300 ease-in-out"
-          style={{ transform: `translateX(${translateX}px)` }}
-        >
+          style={{ transform: `translateX(${translateX}px)` }}>
           {coupons.map((coupon) => (
             <div key={coupon.id} className="w-1/3 flex-shrink-0 p-4">
               <div className="bg-white rounded-lg shadow p-4 h-full">
                 <p className="font-bold text-lg">
-                  {coupon.promotion.value} off
+                  {coupon.promotion?.value} off
                 </p>
                 <p className="text-gray-600">
-                  at {coupon.promotion.business.name}
+                  at {coupon.promotion?.business.name}
                 </p>
                 <p className="text-sm text-gray-500 mt-2">
                   {coupon.redeemedAt
@@ -68,7 +67,11 @@ const CouponCarousel: React.FC<CouponCarouselProps> = ({ coupons }) => {
                       ).toLocaleDateString()}`
                     : "Not yet redeemed"}
                 </p>
-                <button className="bg-stone-200 text-black mt-4 px-4 py-2 rounded-lg transition duration-150 ease-in-out hover:bg-black hover:text-white">
+                <button
+                  className="bg-stone-200 text-black mt-4 px-4 py-2 rounded-lg transition duration-150 ease-in-out hover:bg-black hover:text-white"
+                  onClick={() => {
+                    window.location.href = `/business/promos/${coupon.id}`;
+                  }}>
                   Use Now
                 </button>
               </div>
@@ -78,16 +81,14 @@ const CouponCarousel: React.FC<CouponCarouselProps> = ({ coupons }) => {
         {currentIndex > 0 && (
           <button
             onClick={prev}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow z-10"
-          >
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow z-10">
             <ChevronLeftIcon className="w-6 h-6" />
           </button>
         )}
         {currentIndex < coupons.length - 3 && (
           <button
             onClick={next}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow z-10"
-          >
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow z-10">
             <ChevronRightIcon className="w-6 h-6" />
           </button>
         )}
@@ -142,8 +143,7 @@ const BusinessCarousel: React.FC<BusinessCarouselProps> = ({ businesses }) => {
         <div
           ref={containerRef}
           className="flex transition-transform duration-300 ease-in-out"
-          style={{ transform: `translateX(${translateX}px)` }}
-        >
+          style={{ transform: `translateX(${translateX}px)` }}>
           {businesses.map((business) => (
             <div key={business.id} className="w-1/3 flex-shrink-0 p-4">
               <div className="bg-white rounded-lg shadow p-4 h-full">
@@ -161,16 +161,14 @@ const BusinessCarousel: React.FC<BusinessCarouselProps> = ({ businesses }) => {
         {currentIndex > 0 && (
           <button
             onClick={prev}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow z-10"
-          >
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow z-10">
             <ChevronLeftIcon className="w-6 h-6" />
           </button>
         )}
         {currentIndex < businesses.length - 3 && (
           <button
             onClick={next}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow z-10"
-          >
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow z-10">
             <ChevronRightIcon className="w-6 h-6" />
           </button>
         )}
@@ -222,8 +220,7 @@ const UserAccount = () => {
                 </h2>
                 <button
                   onClick={handleSignOut}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                >
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                   <LogOutIcon className="w-4 h-4 mr-2" />
                   Sign Out
                 </button>

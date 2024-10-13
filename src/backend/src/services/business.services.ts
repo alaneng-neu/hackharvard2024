@@ -188,7 +188,6 @@ export default class BusinessService {
     businessId: string,
     couponId: string
   ): Promise<Coupon> {
-    if (!idToken) throw new HttpException(400, "Must provide an id token");
     if (!businessId) throw new HttpException(400, "Must provide a business id");
     if (!couponId) throw new HttpException(400, "Must provide a promo id");
 
@@ -215,7 +214,7 @@ export default class BusinessService {
     idToken: string,
     businessId: string,
     promoId: string
-  ): Promise<Coupon> {
+  ): Promise<string> {
     if (!businessId) throw new HttpException(400, "Must provide a business id");
     if (!promoId) throw new HttpException(400, "Must provide a promo id");
 
@@ -258,7 +257,7 @@ export default class BusinessService {
         },
         ...couponQueryArgs,
       });
-      return couponTransformer(newCoupon);
+      return newCoupon.id;
     }
   }
 

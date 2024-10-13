@@ -130,15 +130,16 @@ export default class BusinessController {
   static async redeemPromo(req: Request, res: Response, next: NextFunction) {
     try {
       const { idToken } = req.cookies;
-      const { businessId, promotionId } = req.params;
+      const { businessId, promoId } = req.params;
 
       const promo = await BusinessService.redeemPromo(
         idToken,
         businessId,
-        promotionId
+        promoId
       );
-      res.status(200).json(promo);
+      res.status(200).json({ id: promo });
     } catch (err: unknown) {
+      console.log(err);
       next(err);
     }
   }

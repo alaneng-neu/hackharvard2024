@@ -10,10 +10,10 @@ const CouponInfo: React.FC = () => {
 
   const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [loading, setLoading] = useState(true);
-  const { id, couponId } = useParams<{ id: string; couponId: string }>();
+  const { couponId } = useParams<{ id: string; couponId: string }>();
 
   useEffect(() => {
-    fetch(`http://localhost:7071/business/${id}/promos/${couponId}`)
+    fetch(`http://localhost:7071/business/promos/${couponId}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.message) throw new Error(data.message);
@@ -21,7 +21,7 @@ const CouponInfo: React.FC = () => {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [couponId, id]);
+  }, [couponId]);
 
   if (loading) {
     return (
