@@ -10,7 +10,11 @@ const Landing: React.FC = () => {
       <div className="w-full flex justify-between items-center p-4">
         <div>
           <a href="/" className="flex items-center">
-            <img src="/logo.svg" alt="Local.ly Logo" className="h-12 w-auto" />
+            <img
+              src="/logo_drop.svg"
+              alt="Local.ly Logo"
+              className="h-12 w-auto"
+            />
           </a>
         </div>
         <button
@@ -30,11 +34,11 @@ const Landing: React.FC = () => {
 
         {/* Side by side buttons with gap */}
         <div className="flex mb-8 w-full max-w-lg gap-4">
-          <button className="flex items-center justify-center p-4 bg-black text-white border-2 border-black rounded-md w-1/2 gap-2">
+          <button className="flex items-center justify-center p-4 bg-white text-black rounded-md w-1/2 gap-2">
             <Search size={20} />
             Discover Local Treasures
           </button>
-          <button className="flex items-center justify-center p-4 bg-white text-black rounded-md w-1/2 gap-2">
+          <button className="flex items-center justify-center p-4 bg-black text-white rounded-md w-1/2 gap-2">
             <Store size={20} />
             List Your Business
           </button>
