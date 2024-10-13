@@ -7,20 +7,16 @@ interface BusinessCardProps {
 }
 
 const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
-  const formatCategoryName = (categories: string[]) => {
-    return categories
-      .map((category) =>
-        category
-          .toLowerCase()
-          .split("_")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ")
-      )
-      .join(", ");
+  const formatCategoryName = (category: string) => {
+    return category
+      .toLowerCase()
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
 
   return (
-    <div className="business-card rounded-lg overflow-hidden shadow-md bg-gray-800 text-white">
+    <div className="business-card rounded-lg overflow-hidden shadow-md bg-gray-800 text-white flex flex-col h-full">
       <div className="relative">
         {/* TODO: Replace image placeholder with business image */}
         <img
@@ -34,13 +30,20 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
           </div>
         )}
       </div>
-      <div className="p-4">
+      <div className="p-4 flex flex-col flex-grow">
         <h2 className="text-xl font-bold">{business.name}</h2>
-        <p className="text-sm text-gray-300 mb-2">
-          {formatCategoryName(business.businessTypes)}
-        </p>
+        <div className="flex flex-wrap gap-2 my-2">
+          {business.businessTypes.map((type) => (
+            <span
+              key={type}
+              className="bg-gray-600 rounded-full px-3 py-1 text-xs font-semibold"
+            >
+              {formatCategoryName(type)}
+            </span>
+          ))}
+        </div>
         <p className="text-sm mb-4">{business.description}</p>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mt-auto">
           <span className="text-xs">{business.location.address}</span>
           <button className="text-sm font-semibold text-yellow-500">
             Learn More
