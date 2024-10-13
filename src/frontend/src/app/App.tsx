@@ -7,6 +7,7 @@ import Search from "../pages/Search";
 import Login from "../pages/Login";
 import UserAuthCallback from "../pages/UserAuthCallback";
 import BusinessForm from "../pages/BusinessForm";
+import BusinessPage from "../pages/BusinessPage";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Route path="/user/login" element={<Login />} />
         <Route path="/user/auth/callback" element={<UserAuthCallback />} />
         <Route path="/business/create" element={<BusinessForm />} />
+        <Route path="/business/:id" element={<BusinessPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
