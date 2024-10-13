@@ -9,11 +9,11 @@ businessRouter.get("/search", BusinessController.getAllBusinesses);
 businessRouter.get("/types", BusinessController.getBusinessTypes);
 
 businessRouter.get("/:businessId/get", BusinessController.getBusiness);
-businessRouter.get("/:businessId/edit", BusinessController.editBusiness);
+businessRouter.post("/:businessId/edit", BusinessController.editBusiness);
 
 businessRouter.get("/:businessId/promos", BusinessController.getPromos);
-businessRouter.get("/:businessId/promos/new", BusinessController.createPromo);
-businessRouter.get(
+businessRouter.post("/:businessId/promos/new", BusinessController.createPromo);
+businessRouter.post(
   "/:businessId/promos/:couponId/redeem",
   BusinessController.redeemCoupon
 );

@@ -141,11 +141,13 @@ export default class BusinessService {
   }
 
   static async createPromo(
+    idToken: string,
     businessId: string,
     type: string,
     value: number,
     quantity: number
   ): Promise<Promotion> {
+    if (!idToken) throw new HttpException(400, "Must provide an id token");
     if (!businessId) throw new HttpException(400, "Must provide a business id");
     if (!type) throw new HttpException(400, "Must provide a promo type");
     if (!value) throw new HttpException(400, "Must provide a promo value");
@@ -162,12 +164,17 @@ export default class BusinessService {
         `The business with id ${businessId} does not exist!`
       );
 
+    const owner = await getUserFromIdToken(idToken);
+    const ownerId = owner.id;
+    if (existingBusiness.ownerId !== ownerId)
+      throw new HttpException(403, "You are not the owner of this business");
+
     const createdPromo = await prisma.promotion.create({
       data: {
         businessId,
         type: stringToPromotionType(type),
-        value,
-        quantity,
+        value: Number(value),
+        quantity: Number(quantity),
       },
       include: promotionQueryArgs.include,
     });

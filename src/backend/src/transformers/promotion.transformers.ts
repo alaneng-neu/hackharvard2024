@@ -1,4 +1,4 @@
-import { Prisma, Promotion as PrismaPromotion } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { Promotion, PromotionType } from "../../../shared";
 import { businessTransformer } from "./business.transformers";
 import { promotionQueryArgs } from "../prisma-query-args/promotion.query-args";
