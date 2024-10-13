@@ -224,7 +224,8 @@ const Search: React.FC = () => {
                   selectedOptions={selectedOptions}
                   setSelectedOptions={setSelectedOptions}
                   label="Browse Categories"
-                  width="80"></DropdownFilter>
+                  width="80"
+                ></DropdownFilter>
                 <ToggleFilter
                   label="Promotion"
                   isOn={isPromotionOn}
@@ -233,7 +234,8 @@ const Search: React.FC = () => {
               </div>
               <button
                 onClick={resetFilters}
-                className="bg-red-500 text-white px-4 py-2 rounded">
+                className="bg-red-500 text-white px-4 py-2 rounded"
+              >
                 Clear Filters
               </button>
             </div>

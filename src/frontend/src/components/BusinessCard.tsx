@@ -15,7 +15,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
       <div className="relative">
         {/* TODO: Replace image placeholder with business image */}
         <img
-          src={"https://via.placeholder.com/150"}
+          src={"store.png"}
           alt={business.name}
           className="w-full h-48 object-cover"
         />
@@ -31,7 +31,8 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
           {business.businessTypes.map((type) => (
             <span
               key={type}
-              className="bg-gray-600 rounded-full px-3 py-1 text-xs font-semibold">
+              className="bg-gray-600 rounded-full px-3 py-1 text-xs font-semibold"
+            >
               {formatCategoryName(type)}
             </span>
           ))}
