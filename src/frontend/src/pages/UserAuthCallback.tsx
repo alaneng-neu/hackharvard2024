@@ -21,6 +21,7 @@ const UserAuthCallback: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: bodyData,
       })
         .then((response) => response.json())

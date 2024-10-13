@@ -1,14 +1,16 @@
 import { Response } from "express";
 import { AccessDeniedException } from "./error.utils";
 import { verifyAccessToken, verifyIdToken } from "./tokens.utils";
-import { User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import OAUTH2_CLIENT, { OAUTH_CLIENT_ID } from "./oauth_client";
 import prisma from "../prisma/prisma";
+import { userQueryArgs } from "../prisma-query-args/user.query-args";
 
 const COOKIE_SETTINGS = JSON.parse(process.env.COOKIE_SETTINGS || null) || {
-  origin: ["http://localhost:5173", "http://localhost:4173"],
-  credentials: true,
-  methods: "GET,POST,OPTIONS",
+  httpOnly: true,
+  secure: false,
+  sameSite: "none",
+  path: "/",
 };
 
 /**
@@ -91,7 +93,9 @@ export const getAccessTokenAuthStatus = async (
  * @param idToken an oauth id token
  * @returns a user object
  */
-export const getUserFromIdToken = async (idToken: string): Promise<User> => {
+export const getUserFromIdToken = async (
+  idToken: string
+): Promise<Prisma.UserGetPayload<typeof userQueryArgs>> => {
   const ticket = await OAUTH2_CLIENT.verifyIdToken({
     idToken: idToken,
     audience: OAUTH_CLIENT_ID,
@@ -102,6 +106,7 @@ export const getUserFromIdToken = async (idToken: string): Promise<User> => {
   // Return an existing user
   const user = await prisma.user.findUnique({
     where: { googleId },
+    ...userQueryArgs,
   });
   if (user) return user;
 
@@ -112,6 +117,7 @@ export const getUserFromIdToken = async (idToken: string): Promise<User> => {
       name: payload.name,
       email: payload.email,
     },
+    ...userQueryArgs,
   });
   return newUser;
 };

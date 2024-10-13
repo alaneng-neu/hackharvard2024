@@ -8,6 +8,8 @@ import {
 import { HttpException } from "../utils/error.utils";
 import OAUTH2_CLIENT, { OAUTH_CLIENT_ID } from "../utils/oauth_client";
 import prisma from "../prisma/prisma";
+import { User } from "../../../shared";
+import { userTransformer } from "../transformers/user.transformers";
 
 export default class UserService {
   static authClientCredentials = {
@@ -121,5 +123,23 @@ export default class UserService {
     doesAccessIdTokenExist(accessToken, idToken, refreshToken);
     await getIdTokenAuthStatus(idToken);
     return await getAccessTokenAuthStatus(accessToken);
+  }
+
+  /**
+   * Gets the currently logged in user
+   *
+   * @param accessToken the access token
+   * @param idToken the id token
+   * @param refreshToken the refresh token
+   * @returns the logged in user
+   */
+  static async getUser(
+    accessToken: string,
+    idToken: string,
+    refreshToken: string
+  ): Promise<User> {
+    await this.verifyAccessToken(accessToken, idToken, refreshToken);
+    const user = await getUserFromIdToken(idToken);
+    return userTransformer(user);
   }
 }

@@ -62,11 +62,27 @@ export default class UserController {
     }
   }
 
+  static async getUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { accessToken, idToken, refreshToken } = req.cookies;
+
+      const user = await UserService.getUser(
+        accessToken,
+        idToken,
+        refreshToken
+      );
+      return res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async logout(_req: Request, res: Response, next: NextFunction) {
     try {
       res.clearCookie("refreshToken", { path: "/" });
       res.clearCookie("accessToken", { path: "/" });
       res.clearCookie("idToken", { path: "/" });
+
       return res.status(200).send();
     } catch (error) {
       next(error);

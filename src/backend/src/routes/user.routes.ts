@@ -13,6 +13,7 @@ userRouter.post(
 );
 
 userRouter.get("/vat", UserController.verifyAccessToken.bind(UserController));
+userRouter.get("/get", UserController.getUser.bind(UserController));
 userRouter.get("/logout", UserController.logout.bind(UserController));
 
 export default userRouter;
