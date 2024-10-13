@@ -3,8 +3,11 @@ import {
   doesAccessIdTokenExist,
   getIdTokenAuthStatus,
   getAccessTokenAuthStatus,
+  getUserFromIdToken,
 } from "../utils/user.utils";
 import { HttpException } from "../utils/error.utils";
+import OAUTH2_CLIENT, { OAUTH_CLIENT_ID } from "../utils/oauth_client";
+import prisma from "../prisma/prisma";
 
 export default class UserService {
   static authClientCredentials = {
@@ -21,6 +24,9 @@ export default class UserService {
    * @returns new auth status, or error
    */
   static async loginWithCode(code: string, scope: string) {
+    if (!code || !scope)
+      throw new HttpException(401, "Must provide a code and scope to login");
+
     const data = {
       ...this.authClientCredentials,
       grant_type: "authorization_code",
@@ -37,10 +43,16 @@ export default class UserService {
       });
 
       if (!response.ok) {
-        throw new HttpException(401, "Bad token request");
+        const errorResponse = await response.json();
+        const errorMessage = errorResponse.error || "Unknown error";
+        throw new HttpException(
+          401,
+          `Bad token request from Google OAuth: ${errorMessage}`
+        );
       }
 
       const auth = await response.json();
+      await getUserFromIdToken(auth.id_token);
 
       return {
         success: true,

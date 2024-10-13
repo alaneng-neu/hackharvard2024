@@ -1,6 +1,9 @@
 import { Response } from "express";
 import { AccessDeniedException } from "./error.utils";
 import { verifyAccessToken, verifyIdToken } from "./tokens.utils";
+import { User } from "@prisma/client";
+import OAUTH2_CLIENT, { OAUTH_CLIENT_ID } from "./oauth_client";
+import prisma from "../prisma/prisma";
 
 const COOKIE_SETTINGS = JSON.parse(process.env.COOKIE_SETTINGS || null) || {
   origin: ["http://localhost:5173", "http://localhost:4173"],
@@ -80,4 +83,35 @@ export const getAccessTokenAuthStatus = async (
     throw new AccessDeniedException(401, "Unauthorized", false);
 
   return accessTokenStatus;
+};
+
+/**
+ * Given an id token, validates it and returns the user
+ *
+ * @param idToken an oauth id token
+ * @returns a user object
+ */
+export const getUserFromIdToken = async (idToken: string): Promise<User> => {
+  const ticket = await OAUTH2_CLIENT.verifyIdToken({
+    idToken: idToken,
+    audience: OAUTH_CLIENT_ID,
+  });
+  const payload = ticket.getPayload();
+  const googleId = payload["sub"];
+
+  // Return an existing user
+  const user = await prisma.user.findUnique({
+    where: { googleId },
+  });
+  if (user) return user;
+
+  // Generate a new user
+  const newUser = await prisma.user.create({
+    data: {
+      googleId,
+      name: payload.name,
+      email: payload.email,
+    },
+  });
+  return newUser;
 };

@@ -14,11 +14,13 @@
   "dependencies": {
     "@prisma/client": "^5.20.0",
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "express": "^4.21.1",
     "google-auth-library": "^9.14.2"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "nodemon": "^3.1.7",
     "prisma": "^5.20.0",

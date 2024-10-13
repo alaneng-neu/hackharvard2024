@@ -1,8 +1,5 @@
-import { OAuth2Client } from "google-auth-library";
 import { AccessDeniedException } from "../utils/error.utils";
-
-const OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID;
-const OAUTH2_CLIENT = new OAuth2Client(OAUTH_CLIENT_ID);
+import OAUTH2_CLIENT, { OAUTH_CLIENT_ID } from "./oauth_client";
 
 /**
  * Verifies an access token
@@ -51,10 +48,10 @@ export async function verifyIdToken(idToken: string) {
     const payload = ticket.getPayload();
 
     if (payload.aud !== OAUTH_CLIENT_ID)
-      throw new AccessDeniedException(401, "Bad ID token", true);
+      throw new AccessDeniedException(401, "Bad ID token: bad audience", true);
   } catch (error) {
-    if (error?.status == 401)
-      throw new AccessDeniedException(401, "Bad ID token", true);
+    if (error?.status == 401) throw error;
+
     throw new AccessDeniedException(500, "Could not verify id token", true);
   }
 }
