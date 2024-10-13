@@ -64,6 +64,12 @@ export default class BusinessService {
       ...businessQueryArgs,
     });
 
+    if (!business)
+      throw new HttpException(
+        404,
+        `The business with id ${businessId} does not exist!`
+      );
+
     return businessTransformer(business);
   }
 

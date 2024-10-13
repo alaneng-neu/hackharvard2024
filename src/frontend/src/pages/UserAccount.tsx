@@ -140,7 +140,9 @@ const BusinessCarousel: React.FC<BusinessCarouselProps> = ({ businesses }) => {
           {businesses.map((business) => (
             <div key={business.id} className="w-1/3 flex-shrink-0 p-4">
               <div className="bg-white rounded-lg shadow p-4 h-full">
-                <h3 className="font-bold text-lg">{business.name}</h3>
+                <h3 className="font-bold text-lg">
+                  <a href={`/business/${business.id}`}>{business.name}</a>
+                </h3>
                 <p className="text-sm text-gray-600 mb-2">
                   {business.businessTypes.join(", ")}
                 </p>

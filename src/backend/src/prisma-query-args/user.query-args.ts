@@ -1,8 +1,9 @@
 import { Prisma } from "@prisma/client";
+import { businessQueryArgs } from "./business.query-args";
 
 export const userQueryArgs = Prisma.validator<Prisma.UserDefaultArgs>()({
   include: {
-    businesses: true,
+    businesses: businessQueryArgs,
     coupons: true,
   },
 });
