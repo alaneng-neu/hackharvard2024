@@ -1,6 +1,6 @@
 import React from "react";
 import { Business } from "../../../shared/index.ts";
-import { promotionsToString } from "../utils/business.utils.ts";
+import { promotionToString } from "../utils/business.utils.ts";
 
 interface BusinessCardProps {
   business: Business;
@@ -18,7 +18,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
         />
         {business.promotions.length > 0 && (
           <div className="absolute top-4 left-4 bg-yellow-500 text-black px-2 py-1 rounded-md text-sm font-bold">
-            {promotionsToString(business.promotions)}
+            {promotionToString(business.promotions[0])}
           </div>
         )}
       </div>
