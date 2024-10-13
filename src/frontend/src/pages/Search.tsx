@@ -207,6 +207,7 @@ const testBusinesses: Business[] = [
 
 const Search: React.FC = () => {
   const [businesses, setBusinesses] = useState<Business[]>(testBusinesses);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   return (
     <div>
@@ -217,10 +218,11 @@ const Search: React.FC = () => {
             <div className="flex gap-4">
               <DropdownFilter
                 options={categories}
-                label="Select a Category"
-                width="60"
-              />
-              <ToggleFilter label="Promotions" />
+                selectedOptions={selectedOptions}
+                setSelectedOptions={setSelectedOptions}
+                label="Select a type"
+              ></DropdownFilter>
+              <ToggleFilter label="Promotion"></ToggleFilter>
             </div>
             <button>Clear Filters</button>
           </div>
