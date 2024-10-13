@@ -220,7 +220,8 @@ const Search: React.FC = () => {
                 options={categories}
                 selectedOptions={selectedOptions}
                 setSelectedOptions={setSelectedOptions}
-                label="Select a type"
+                label="Browse Categories"
+                width="60"
               ></DropdownFilter>
               <ToggleFilter label="Promotion"></ToggleFilter>
             </div>
