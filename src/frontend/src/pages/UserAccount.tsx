@@ -8,6 +8,7 @@ interface CouponCarouselProps {
   coupons: Coupon[];
 }
 
+// TODO: Refactor this to a reusable component
 const CouponCarousel: React.FC<CouponCarouselProps> = ({ coupons }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [translateX, setTranslateX] = useState(0);
@@ -168,8 +169,9 @@ const BusinessCarousel: React.FC<BusinessCarouselProps> = ({ businesses }) => {
 };
 
 const UserAccount = () => {
-  const [user, setUser] = useState<User>();
   useAuthenticatedView();
+
+  const [user, setUser] = useState<User>();
 
   const handleSignOut = () => {
     fetch("http://localhost:7071/user/logout", {

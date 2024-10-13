@@ -8,9 +8,12 @@ import { HttpException } from "../utils/error.utils";
 import { stringToPromotionType } from "../utils/promotion.utils";
 import { promotionQueryArgs } from "../prisma-query-args/promotion.query-args";
 import { couponQueryArgs } from "../prisma-query-args/coupon.query-args";
+import { User } from "@prisma/client";
+import { getUserFromIdToken } from "../utils/user.utils";
 
 export default class BusinessService {
   static async createBusiness(
+    idToken: string,
     name: string,
     location: string,
     businessTypes: string[],
@@ -29,7 +32,8 @@ export default class BusinessService {
         "Missing business types to create a new business"
       );
 
-    const ownerId = "1"; // TODO: Get the owner id from the request
+    const owner = await getUserFromIdToken(idToken);
+    const ownerId = owner.id;
 
     const types = businessTypes.map(stringToBusinessType);
     const createdBusiness = await prisma.business.create({

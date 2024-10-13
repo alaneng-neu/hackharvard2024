@@ -8,9 +8,11 @@ export default class BusinessController {
     next: NextFunction
   ) {
     try {
+      const { idToken } = req.cookies;
       const { name, location, businessTypes, description } = req.body;
 
       const newBusiness = await BusinessService.createBusiness(
+        idToken,
         name,
         location,
         businessTypes,

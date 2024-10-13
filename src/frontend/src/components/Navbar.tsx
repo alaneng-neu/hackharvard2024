@@ -18,7 +18,11 @@ const Navbar: React.FC = () => {
       </div>
 
       <div>
-        <button className="bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200">
+        <button
+          className="bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200"
+          onClick={() => {
+            window.location.href = "/user/login";
+          }}>
           Login
         </button>
       </div>
