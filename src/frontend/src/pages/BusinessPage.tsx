@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Business,
-  Location,
-  BusinessType,
-  PromotionType,
-} from "../../../shared/index";
+import { Business } from "../../../shared/index";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import PromotionCard from "../components/PromotionCard";
