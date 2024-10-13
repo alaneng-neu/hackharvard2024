@@ -111,13 +111,50 @@ export default class BusinessController {
     }
   }
 
-  static async redeemCoupon(req: Request, res: Response, next: NextFunction) {
+  static async getCoupon(req: Request, res: Response, next: NextFunction) {
     try {
+      const { idToken } = req.cookies;
+      const { businessId, couponId } = req.params;
+
+      const coupon = await BusinessService.getCoupon(
+        idToken,
+        businessId,
+        couponId
+      );
+      res.status(200).json(coupon);
+    } catch (err: unknown) {
+      next(err);
+    }
+  }
+
+  static async redeemPromo(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { idToken } = req.cookies;
+      const { businessId, promotionId } = req.params;
+
+      const promo = await BusinessService.redeemPromo(
+        idToken,
+        businessId,
+        promotionId
+      );
+      res.status(200).json(promo);
+    } catch (err: unknown) {
+      next(err);
+    }
+  }
+
+  static async useCoupon(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { idToken } = req.cookies;
       const businessId = req.params.businessId;
       const couponId = req.params.couponId;
 
-      const promo = await BusinessService.redeemCoupon(businessId, couponId);
-      res.status(200).json(promo);
+      const coupon = await BusinessService.useCoupon(
+        idToken,
+        businessId,
+        couponId
+      );
+      res.status(200).json(coupon);
     } catch (err: unknown) {
       next(err);
     }

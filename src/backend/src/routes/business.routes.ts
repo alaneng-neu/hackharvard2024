@@ -13,9 +13,17 @@ businessRouter.post("/:businessId/edit", BusinessController.editBusiness);
 
 businessRouter.get("/:businessId/promos", BusinessController.getPromos);
 businessRouter.post("/:businessId/promos/new", BusinessController.createPromo);
+businessRouter.get(
+  "/:businessId/promos/:couponId",
+  BusinessController.getCoupon
+);
 businessRouter.post(
   "/:businessId/promos/:couponId/redeem",
-  BusinessController.redeemCoupon
+  BusinessController.redeemPromo
+);
+businessRouter.post(
+  "/:businessId/promos/:couponId/use",
+  BusinessController.useCoupon
 );
 
 export default businessRouter;

@@ -1,23 +1,9 @@
 import { useEffect, useState } from "react";
 import { MapPin, Store, Tag, Percent, Plus } from "lucide-react";
 import Navbar from "../components/Navbar";
-import { Business } from "../../../shared";
+import { Business, Coupon } from "../../../shared";
 import { useParams } from "react-router-dom";
-import { promotionToString } from "../utils/business.utils";
-
-const businessTypeLabels = {
-  FOOD_AND_BEVERAGE: "Food & Beverage",
-  RETAIL: "Retail",
-  CLOTHING_AND_ACCESSORIES: "Clothing & Accessories",
-  HEALTH_AND_WELLNESS: "Health & Wellness",
-  ENTERTAINMENT: "Entertainment",
-  HOSPITALITY: "Hospitality",
-  SERVICES: "Services",
-  EDUCATION: "Education",
-  TECHNOLOGY: "Technology",
-  NON_PROFIT: "Non-Profit",
-  OTHER: "Other",
-};
+import { formatCategoryName, promotionToString } from "../utils/business.utils";
 
 const BusinessPage = () => {
   const { id } = useParams();
@@ -46,6 +32,25 @@ const BusinessPage = () => {
         ? prev.filter((s) => s !== section)
         : [...prev, section]
     );
+  };
+
+  const handleRedeemPromo = (promotionId: string) => {
+    fetch(`http://localhost:7071/business/${id}/promos/${promotionId}/redeem`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data: Coupon) => {
+        const couponId = data.id;
+        window.location.href = `/business/${id}/promo/${couponId}`;
+      })
+      .catch((error) => {
+        console.error(error);
+        alert(`Failed to redeem promo: ${error.message}`);
+      });
   };
 
   return (
@@ -96,9 +101,13 @@ const BusinessPage = () => {
                         Business Types
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        {business.businessTypes
-                          .map((type) => businessTypeLabels[type])
-                          .join(", ")}
+                        {business.businessTypes.map((type) => (
+                          <span
+                            key={type}
+                            className="bg-gray-600 rounded-full px-3 py-1 text-xs font-semibold">
+                            {formatCategoryName(type)}
+                          </span>
+                        ))}
                       </dd>
                     </div>
                   </dl>
@@ -141,9 +150,10 @@ const BusinessPage = () => {
                         <div className="flex items-center justify-between">
                           <button
                             type="button"
-                            onClick={() => {}}
-                            className="bg-[#5aa157] hover:bg-[#3f6b3d] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                          >
+                            onClick={() => {
+                              handleRedeemPromo(promotion.id);
+                            }}
+                            className="bg-[#5aa157] hover:bg-[#3f6b3d] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Redeem
                           </button>
                         </div>

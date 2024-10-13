@@ -1,5 +1,5 @@
 import prisma from "../prisma/prisma";
-import { Business, BusinessType, Promotion } from "../../../shared";
+import { Business, BusinessType, Coupon, Promotion } from "../../../shared";
 import { businessTransformer } from "../transformers/business.transformers";
 import { promotionTransformer } from "../transformers/promotion.transformers";
 import { stringToBusinessType } from "../utils/business.utils";
@@ -9,6 +9,7 @@ import { stringToPromotionType } from "../utils/promotion.utils";
 import { promotionQueryArgs } from "../prisma-query-args/promotion.query-args";
 import { couponQueryArgs } from "../prisma-query-args/coupon.query-args";
 import { getUserFromIdToken } from "../utils/user.utils";
+import { couponTransformer } from "../transformers/coupon.transformers";
 
 export default class BusinessService {
   static async createBusiness(
@@ -182,10 +183,91 @@ export default class BusinessService {
     return promotionTransformer(createdPromo);
   }
 
-  static async redeemCoupon(
+  static async getCoupon(
+    idToken: string,
     businessId: string,
     couponId: string
-  ): Promise<boolean> {
+  ): Promise<Coupon> {
+    if (!idToken) throw new HttpException(400, "Must provide an id token");
+    if (!businessId) throw new HttpException(400, "Must provide a business id");
+    if (!couponId) throw new HttpException(400, "Must provide a promo id");
+
+    const owner = await getUserFromIdToken(idToken);
+    const ownerId = owner.id;
+
+    const coupon = await prisma.coupon.findUnique({
+      where: { id: couponId },
+      ...couponQueryArgs,
+    });
+    if (!coupon)
+      throw new HttpException(
+        400,
+        `The coupon with id ${couponId} does not exist!`
+      );
+    if (coupon.userId !== ownerId)
+      throw new HttpException(403, "You are not the owner of this coupon");
+
+    return couponTransformer(coupon);
+  }
+
+  // A user redeems a promo from the business
+  static async redeemPromo(
+    idToken: string,
+    businessId: string,
+    promoId: string
+  ): Promise<Coupon> {
+    if (!businessId) throw new HttpException(400, "Must provide a business id");
+    if (!promoId) throw new HttpException(400, "Must provide a promo id");
+
+    const existingBusiness = await prisma.business.findUnique({
+      where: { id: businessId },
+      ...businessQueryArgs,
+    });
+    if (!existingBusiness)
+      throw new HttpException(
+        400,
+        `The business with id ${businessId} does not exist!`
+      );
+
+    const owner = await getUserFromIdToken(idToken);
+    const ownerId = owner.id;
+
+    const promo = await prisma.promotion.findUnique({
+      where: { id: promoId },
+      ...promotionQueryArgs,
+    });
+    if (!promo)
+      throw new HttpException(
+        400,
+        `The promotion with id ${promoId} does not exist!`
+      );
+
+    if (promo.quantity <= 0) {
+      throw new HttpException(400, "This promotion is out of stock");
+    } else {
+      await prisma.promotion.update({
+        where: { id: promoId },
+        data: { quantity: promo.quantity - 1 },
+        ...promotionQueryArgs,
+      });
+
+      const newCoupon = await prisma.coupon.create({
+        data: {
+          promotionId: promoId,
+          userId: ownerId,
+        },
+        ...couponQueryArgs,
+      });
+      return couponTransformer(newCoupon);
+    }
+  }
+
+  // A business marks the coupon as used
+  static async useCoupon(
+    idToken: string,
+    businessId: string,
+    couponId: string
+  ): Promise<Coupon> {
     if (!businessId) throw new HttpException(400, "Must provide a business id");
     if (!couponId) throw new HttpException(400, "Must provide a promo id");
 
@@ -199,8 +281,10 @@ export default class BusinessService {
         `The business with id ${businessId} does not exist!`
       );
 
-    // Check that the logged in user is the owner of the business
-    // TODO
+    const owner = await getUserFromIdToken(idToken);
+    const ownerId = owner.id;
+    if (existingBusiness.ownerId !== ownerId)
+      throw new HttpException(403, "You are not the owner of this business");
 
     const coupon = await prisma.coupon.findUnique({
       where: { id: couponId },
@@ -212,8 +296,13 @@ export default class BusinessService {
         `The coupon with id ${couponId} does not exist!`
       );
 
-    // Check if the coupon is already redeemed
+    if (coupon.redeemedAt) throw new HttpException(400, "Coupon already used");
 
-    return true; // TODO: Implement the redeem coupon logic
+    const updatedCoupon = await prisma.coupon.update({
+      where: { id: couponId },
+      data: { redeemedAt: new Date() },
+      ...couponQueryArgs,
+    });
+    return couponTransformer(updatedCoupon);
   }
 }

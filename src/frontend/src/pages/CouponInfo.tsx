@@ -1,60 +1,27 @@
 import React, { useState, useEffect } from "react";
 import AuthNavbar from "../components/AuthNavbar";
-
-interface Coupon {
-  id: string;
-  promotion: {
-    id: string;
-    title: string;
-    description: string;
-  };
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  };
-  redeemedAt: string | null;
-}
-
-// Test data for the coupon
-const testCoupon: Coupon = {
-  id: "123e4567-e89b-12d3-a456-426614174000",
-  promotion: {
-    id: "789e0123-e45b-67d8-a901-234567890000",
-    title: "50% Off at Joe's Coffee",
-    description:
-      "Get half off your next coffee purchase at Joe's Coffee Shop. Valid for any size drink.",
-  },
-  user: {
-    id: "456e7890-e12b-34d5-a678-901234567000",
-    name: "John Doe",
-    email: "john.doe@example.com",
-  },
-  redeemedAt: null,
-};
+import { Coupon } from "../../../shared";
+import { useParams } from "react-router-dom";
+import { useAuthenticatedView } from "../hooks/useAuthenticatedView";
+import { promotionToString } from "../utils/business.utils";
 
 const CouponInfo: React.FC = () => {
+  useAuthenticatedView();
+
   const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [loading, setLoading] = useState(true);
+  const { id, couponId } = useParams<{ id: string; couponId: string }>();
 
   useEffect(() => {
-    // Simulate API call with a delay
-    const timer = setTimeout(() => {
-      setCoupon(testCoupon);
-      setLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleRedeem = () => {
-    if (coupon) {
-      setCoupon((prev) => ({
-        ...prev!,
-        redeemedAt: new Date().toISOString(),
-      }));
-    }
-  };
+    fetch(`http://localhost:7071/business/${id}/promos/${couponId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) throw new Error(data.message);
+        setCoupon(data);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [couponId, id]);
 
   if (loading) {
     return (
@@ -77,8 +44,12 @@ const CouponInfo: React.FC = () => {
     <div>
       <AuthNavbar />
       <div className="max-w-md mx-auto mt-8 p-4 border rounded-lg shadow-lg bg-white">
-        <h2 className="text-xl font-bold mb-2">{coupon.promotion.title}</h2>
-        <p className="text-gray-600 mb-4">{coupon.promotion.description}</p>
+        <h2 className="text-xl font-bold mb-2">
+          Coupon at {coupon.promotion.business.name}
+        </h2>
+        <p className="text-gray-600 mb-4">
+          {promotionToString(coupon.promotion)}
+        </p>
         <div className="mb-2">
           <p className="font-semibold">Coupon ID:</p>
           <p className="text-sm text-gray-600">{coupon.id}</p>
@@ -99,17 +70,7 @@ const CouponInfo: React.FC = () => {
             </p>
           </div>
         )}
-        <button
-          className={`w-full py-2 rounded-lg text-white ${
-            coupon.redeemedAt
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
-          }`}
-          onClick={handleRedeem}
-          disabled={!!coupon.redeemedAt}
-        >
-          {coupon.redeemedAt ? "Redeemed" : "Redeem Coupon"}
-        </button>
+        {/* TODO: Add the QR code to be scanned by the business */}
       </div>
     </div>
   );

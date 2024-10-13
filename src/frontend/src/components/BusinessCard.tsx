@@ -1,20 +1,15 @@
 import React from "react";
 import { Business } from "../../../shared/index.ts";
-import { promotionToString } from "../utils/business.utils.ts";
+import {
+  formatCategoryName,
+  promotionToString,
+} from "../utils/business.utils.ts";
 
 interface BusinessCardProps {
   business: Business;
 }
 
 const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
-  const formatCategoryName = (category: string) => {
-    return category
-      .toLowerCase()
-      .split("_")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
-
   return (
     <div className="business-card rounded-lg overflow-hidden shadow-md bg-gray-800 text-white flex flex-col h-full">
       <div className="relative">
@@ -36,8 +31,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
           {business.businessTypes.map((type) => (
             <span
               key={type}
-              className="bg-gray-600 rounded-full px-3 py-1 text-xs font-semibold"
-            >
+              className="bg-gray-600 rounded-full px-3 py-1 text-xs font-semibold">
               {formatCategoryName(type)}
             </span>
           ))}

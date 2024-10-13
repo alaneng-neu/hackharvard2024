@@ -24,11 +24,11 @@ const App: React.FC = () => {
         <Route path="/user/auth/callback" element={<UserAuthCallback />} />
         <Route path="/business/create" element={<BusinessForm />} />
         <Route path="/business/:id" element={<BusinessPage />} />
-        <Route path="/business/:id/promo/:couponId" element={<CouponInfo />} />
         <Route
           path="/business/:id/promo/create"
           element={<CreatePromoPage />}
         />
+        <Route path="/business/:id/promo/:couponId" element={<CouponInfo />} />
         <Route
           path="/business/:id/promo/:couponId/redeem"
           element={<BusinessCoupon />}
