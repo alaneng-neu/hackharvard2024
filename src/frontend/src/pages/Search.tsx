@@ -213,7 +213,7 @@ const Search: React.FC = () => {
     <div>
       <Navbar />
       <div className="flex justify-center">
-        <main className="w-3/5">
+        <main className="w-4/5">
           <div className="flex justify-between py-6">
             <div className="flex gap-4">
               <DropdownFilter

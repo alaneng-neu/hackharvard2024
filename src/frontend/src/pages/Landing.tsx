@@ -5,15 +5,16 @@ const Landing: React.FC = () => {
   return (
     <div
       className="h-screen bg-cover bg-center flex flex-col justify-between"
-      style={{ backgroundImage: `url(/background.jpg)` }}>
+      style={{ backgroundImage: `url(/background.jpg)` }}
+    >
       {/* Header */}
-      <div className="w-full flex justify-between items-center p-4">
+      <div className="flex justify-between items-center h-20 px-4 m-0">
         <div>
           <a href="/" className="flex items-center">
             <img
               src="/logo_drop.svg"
               alt="Local.ly Logo"
-              className="h-12 w-auto"
+              className="h-16 w-auto"
             />
           </a>
         </div>
@@ -21,7 +22,8 @@ const Landing: React.FC = () => {
           className="px-4 py-2 bg-black text-white rounded-md"
           onClick={() => {
             window.location.href = "/user/login";
-          }}>
+          }}
+        >
           Log in
         </button>
       </div>
