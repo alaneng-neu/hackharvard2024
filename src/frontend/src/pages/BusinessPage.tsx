@@ -3,6 +3,7 @@ import { MapPin, Store, Tag, Percent, Plus } from "lucide-react";
 import Navbar from "../components/Navbar";
 import { Business } from "../../../shared";
 import { useParams } from "react-router-dom";
+import { promotionToString } from "../utils/business.utils";
 
 const businessTypeLabels = {
   FOOD_AND_BEVERAGE: "Food & Beverage",
@@ -137,10 +138,17 @@ export default function BusinessPage() {
                             <Tag className="w-5 h-5 mr-2 text-blue-500" />
                           )}
                           <span className="text-lg font-medium text-gray-900">
-                            {promotion.type === "PERCENT_DISCOUNT"
-                              ? `${promotion.value}% off`
-                              : `$${promotion.value} off`}
+                            {promotionToString(promotion)}
                           </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <button
+                            type="button"
+                            onClick={() => {}}
+                            className="bg-[#5aa157] hover:bg-[#3f6b3d] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                          >
+                            Redeem
+                          </button>
                         </div>
                         <span className="text-sm text-gray-500">
                           {promotion.quantity} available
