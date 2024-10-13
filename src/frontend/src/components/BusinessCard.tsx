@@ -7,6 +7,18 @@ interface BusinessCardProps {
 }
 
 const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
+  const formatCategoryName = (categories: string[]) => {
+    return categories
+      .map((category) =>
+        category
+          .toLowerCase()
+          .split("_")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")
+      )
+      .join(", ");
+  };
+
   return (
     <div className="business-card rounded-lg overflow-hidden shadow-md bg-gray-800 text-white">
       <div className="relative">
@@ -24,7 +36,9 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business }) => {
       </div>
       <div className="p-4">
         <h2 className="text-xl font-bold">{business.name}</h2>
-        <p className="text-sm text-gray-300 mb-2">{business.businessTypes}</p>
+        <p className="text-sm text-gray-300 mb-2">
+          {formatCategoryName(business.businessTypes)}
+        </p>
         <p className="text-sm mb-4">{business.description}</p>
         <div className="flex justify-between items-center">
           <span className="text-xs">{business.location.address}</span>
