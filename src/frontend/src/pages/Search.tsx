@@ -3,25 +3,12 @@ import Navbar from "../components/Navbar.tsx";
 import DropdownFilter from "../components/DropdownFilter.tsx";
 import ToggleFilter from "../components/ToggleFilter.tsx";
 import BusinessCard from "../components/BusinessCard";
+import { useGetBusinessTypes } from "../hooks/useGetBusinessTypes";
 import {
   Business,
   BusinessType,
   PromotionType,
 } from "../../../shared/index.ts";
-
-// TODO: Fetch from API
-const categories = [
-  "Dining",
-  "Retail",
-  "Fashion",
-  "Health",
-  "Entertainment",
-  "Hospitality",
-  "Services",
-  "Education",
-  "Technology",
-  "Non-Profit",
-];
 
 // TODO: Fetch from API
 const dummyBusiness: Business = {
@@ -208,6 +195,13 @@ const testBusinesses: Business[] = [
 const Search: React.FC = () => {
   const [businesses, setBusinesses] = useState<Business[]>(testBusinesses);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [isPromotionOn, setIsPromotionOn] = useState(false);
+  const categories = useGetBusinessTypes();
+
+  const resetFilters = () => {
+    setSelectedOptions([]);
+    setIsPromotionOn(false);
+  };
 
   return (
     <div>
@@ -223,9 +217,18 @@ const Search: React.FC = () => {
                 label="Browse Categories"
                 width="60"
               ></DropdownFilter>
-              <ToggleFilter label="Promotion"></ToggleFilter>
+              <ToggleFilter
+                label="Promotion"
+                isOn={isPromotionOn}
+                setIsOn={setIsPromotionOn}
+              />
             </div>
-            <button>Clear Filters</button>
+            <button
+              onClick={resetFilters}
+              className="bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Clear Filters
+            </button>
           </div>
 
           <div className="flex justify-center">

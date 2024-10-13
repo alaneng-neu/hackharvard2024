@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface ToggleFilterProps {
   label: string;
+  isOn: boolean;
+  setIsOn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ToggleFilter: React.FC<ToggleFilterProps> = ({ label }) => {
-  const [isOn, setIsOn] = useState(false);
-
+const ToggleFilter: React.FC<ToggleFilterProps> = ({
+  label,
+  isOn,
+  setIsOn,
+}) => {
   const handleToggle = () => {
     setIsOn((prev) => !prev);
   };
