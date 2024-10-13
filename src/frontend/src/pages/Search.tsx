@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.tsx";
 import DropdownFilter from "../components/DropdownFilter.tsx";
 import ToggleFilter from "../components/ToggleFilter.tsx";
@@ -198,6 +198,14 @@ const Search: React.FC = () => {
   const [isPromotionOn, setIsPromotionOn] = useState(false);
   const categories = useGetBusinessTypes();
 
+  // useEffect(() => {
+  //   fetch("http://localhost:7071/business/search")
+  //     .then((res) => res.json())
+  //     .then((data: Business[]) => {
+  //       setBusinesses(data);
+  //     });
+  // }, []);
+
   const resetFilters = () => {
     setSelectedOptions([]);
     setIsPromotionOn(false);
@@ -206,65 +214,65 @@ const Search: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex justify-center">
-        <main className="w-11/12 lg:w-4/5">
-          <div className="flex flex-col lg:flex-row lg:justify-between py-6">
-            <div className="flex flex-col lg:flex-row gap-4">
-              <DropdownFilter
-                options={categories}
-                selectedOptions={selectedOptions}
-                setSelectedOptions={setSelectedOptions}
-                label="Browse Categories"
-                width="80"
-              ></DropdownFilter>
-              <ToggleFilter
-                label="Promotion"
-                isOn={isPromotionOn}
-                setIsOn={setIsPromotionOn}
-              />
+      {businesses && (
+        <div className="flex justify-center">
+          <main className="w-11/12 lg:w-4/5">
+            <div className="flex flex-col lg:flex-row lg:justify-between py-6">
+              <div className="flex flex-col lg:flex-row gap-4">
+                <DropdownFilter
+                  options={categories}
+                  selectedOptions={selectedOptions}
+                  setSelectedOptions={setSelectedOptions}
+                  label="Browse Categories"
+                  width="80"></DropdownFilter>
+                <ToggleFilter
+                  label="Promotion"
+                  isOn={isPromotionOn}
+                  setIsOn={setIsPromotionOn}
+                />
+              </div>
+              <button
+                onClick={resetFilters}
+                className="bg-red-500 text-white px-4 py-2 rounded">
+                Clear Filters
+              </button>
             </div>
-            <button
-              onClick={resetFilters}
-              className="bg-red-500 text-white px-4 py-2 rounded"
-            >
-              Clear Filters
-            </button>
-          </div>
 
-          <div className="flex justify-center">
-            <h1 className="py-4 text-4xl text-center">
-              Start searching to find local gems!
-            </h1>
-          </div>
-
-          <div className="flex-col gap-6">
-            <p className="text-xl font-semibold mb-4">Trending</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {businesses.slice(0, 3).map((business) => (
-                <BusinessCard key={business.id} business={business} />
-              ))}
+            <div className="flex justify-center">
+              <h1 className="py-4 text-4xl text-center">
+                Start searching to find local gems!
+              </h1>
             </div>
-          </div>
 
-          <div className="flex-col gap-6 mt-8">
-            <p className="text-xl font-semibold mb-4">Suggestions</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {businesses.slice(3, 6).map((business) => (
-                <BusinessCard key={business.id} business={business} />
-              ))}
+            <div className="flex-col gap-6">
+              <p className="text-xl font-semibold mb-4">Trending</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {businesses.slice(0, 3).map((business) => (
+                  <BusinessCard key={business.id} business={business} />
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="flex-col gap-6 mt-8">
-            <p className="text-xl font-semibold mb-4">Nearby</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {businesses.slice(6, 9).map((business) => (
-                <BusinessCard key={business.id} business={business} />
-              ))}
+            <div className="flex-col gap-6 mt-8">
+              <p className="text-xl font-semibold mb-4">Suggestions</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {businesses.slice(3, 6).map((business) => (
+                  <BusinessCard key={business.id} business={business} />
+                ))}
+              </div>
             </div>
-          </div>
-        </main>
-      </div>
+
+            <div className="flex-col gap-6 mt-8">
+              <p className="text-xl font-semibold mb-4">Nearby</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {businesses.slice(6, 9).map((business) => (
+                  <BusinessCard key={business.id} business={business} />
+                ))}
+              </div>
+            </div>
+          </main>
+        </div>
+      )}
     </div>
   );
 };
