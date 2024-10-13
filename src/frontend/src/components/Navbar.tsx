@@ -5,7 +5,7 @@ const Navbar: React.FC = () => {
     <nav className="flex justify-between items-center h-20 p-4 bg-stone-100">
       <div className="flex items-center">
         <a href="/search">
-          <img src="/logo.svg" alt="Local.ly Logo" className="h-10 w-auto" />
+          <img src="/logo.svg" alt="Local.ly Logo" className="h-12 w-auto" />
         </a>
       </div>
 
