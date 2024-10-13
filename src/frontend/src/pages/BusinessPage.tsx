@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MapPin, Store, Tag, Percent } from "lucide-react";
+import { MapPin, Store, Tag, Percent, Plus } from "lucide-react";
 import Navbar from "../components/Navbar";
 import { Business } from "../../../shared";
 import { useParams } from "react-router-dom";
@@ -69,7 +69,8 @@ export default function BusinessPage() {
             <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
               <div
                 className="px-4 py-5 sm:px-6 flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection("details")}>
+                onClick={() => toggleSection("details")}
+              >
                 <h2 className="text-lg font-medium text-gray-900">
                   Business Details
                 </h2>
@@ -108,7 +109,8 @@ export default function BusinessPage() {
             <div className="bg-white shadow overflow-hidden sm:rounded-lg">
               <div
                 className="px-4 py-5 sm:px-6 flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection("promotions")}>
+                onClick={() => toggleSection("promotions")}
+              >
                 <h2 className="text-lg font-medium text-gray-900">
                   Current Promotions
                 </h2>
@@ -125,7 +127,8 @@ export default function BusinessPage() {
                         index !== business.promotions.length - 1
                           ? "border-b border-gray-200"
                           : ""
-                      }`}>
+                      }`}
+                    >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           {promotion.type === "PERCENT_DISCOUNT" ? (
@@ -145,14 +148,24 @@ export default function BusinessPage() {
                       </div>
                     </div>
                   ))}
+                  <div className="px-4 py-5 sm:p-6">
+                    <button
+                      onClick={() => (window.location.href = "./promo/new")}
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      <Plus className="w-5 h-5 mr-2" />
+                      Create New Coupon
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
           </main>
         </div>
       )}
-      {/* TODO: Make this error boundary look better */}
-      {error && <div>Error: {error}</div>}
+      {error && (
+        <div className="text-red-500 text-center mt-6">Error: {error}</div>
+      )}
     </div>
   );
 }
