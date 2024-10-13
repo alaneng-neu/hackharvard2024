@@ -45,7 +45,8 @@ const Login: React.FC = () => {
         <img src="/gem.svg" className="absolute h-12 w-35 mb-[9rem]"></img>
         <button
           className="flex items-center bg-white text-gray-800 border border-gray-300 rounded-lg shadow-md p-3 hover:bg-gray-100 transition duration-200"
-          onClick={handleGoogleSSO}>
+          onClick={handleGoogleSSO}
+        >
           <img
             src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
             alt="Google Logo"
