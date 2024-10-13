@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="flex justify-between items-center h-20 px-4 bg-stone-100 m-0 relative">
       <div className="flex items-center">
-        <a href="/search">
+        <a href="/">
           <img src="/logo.svg" alt="Local.ly Logo" className="h-12 w-auto" />
         </a>
       </div>
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
         <div className="absolute top-20 left-0 right-0 bg-white shadow-lg z-50">
           <div className="flex flex-col items-center py-2">
             <a
-              href="/search"
+              href="/"
               className="py-2 text-gray-800 hover:bg-gray-200 w-full text-center"
             >
               Search Page
