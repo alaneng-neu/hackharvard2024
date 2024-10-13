@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="flex justify-between items-center h-20 p-4 bg-stone-100">
+    <nav className="flex justify-between items-center h-20 px-4 bg-stone-100 m-0">
       <div className="flex items-center">
         <a href="/search">
           <img src="/logo.svg" alt="Local.ly Logo" className="h-12 w-auto" />

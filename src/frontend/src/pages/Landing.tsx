@@ -1,4 +1,5 @@
 import React from "react";
+import { Search, Store } from "lucide-react";
 
 const Landing: React.FC = () => {
   return (
@@ -20,25 +21,21 @@ const Landing: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex flex-col justify-center items-start flex-grow text-white w-full max-w-4xl text-left pl-20">
-        {" "}
-        {/* Added negative margin */}
-        <h2 className="text-5xl font-bold mb-8 text-black">
-          Discover gems near you
+        <h2 className="text-5xl font-bold mb-8 text-white">
+          Discover gems near you ✨
         </h2>
-        {/* Search Bar */}
-        <div className="flex items-center mb-8 w-full max-w-lg">
-          <input
-            type="text"
-            placeholder="Enter zipcode"
-            className="p-4 w-full rounded-l-md border-none focus:ring-2 focus:ring-black text-black"
-          />
-          <button className="p-4 bg-black text-white rounded-r-md">
-            Search
+
+        {/* Side by side buttons with gap */}
+        <div className="flex mb-8 w-full max-w-lg gap-4">
+          <button className="flex items-center justify-center p-4 bg-black text-white border-2 border-black rounded-md w-1/2 gap-2">
+            <Search size={20} />
+            Discover Local Treasures
+          </button>
+          <button className="flex items-center justify-center p-4 bg-white text-black rounded-md w-1/2 gap-2">
+            <Store size={20} />
+            List Your Business
           </button>
         </div>
-        <a href="#" className="text-black underline text-lg">
-          Business? Onboard here
-        </a>
       </div>
     </div>
   );
