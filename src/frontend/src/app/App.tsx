@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import UserAuthCallback from "../pages/UserAuthCallback";
 import BusinessForm from "../pages/BusinessForm";
 import BusinessPage from "../pages/BusinessPage";
+import UserAccount from "../pages/UserAccount";
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/user" element={<UserAccount />} />
         <Route path="/user/login" element={<Login />} />
         <Route path="/user/auth/callback" element={<UserAuthCallback />} />
         <Route path="/business/create" element={<BusinessForm />} />
