@@ -25,14 +25,12 @@ export default class BusinessController {
   }
 
   static async getAllBusinesses(
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
-      const filterArgs = req.query; // No args defaults to all businesses
-
-      const businesses = await BusinessService.getAllBusinesses(filterArgs);
+      const businesses = await BusinessService.getAllBusinesses();
       res.status(200).json(businesses);
     } catch (err: unknown) {
       next(err);

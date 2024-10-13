@@ -8,7 +8,6 @@ import { HttpException } from "../utils/error.utils";
 import { stringToPromotionType } from "../utils/promotion.utils";
 import { promotionQueryArgs } from "../prisma-query-args/promotion.query-args";
 import { couponQueryArgs } from "../prisma-query-args/coupon.query-args";
-import { User } from "@prisma/client";
 import { getUserFromIdToken } from "../utils/user.utils";
 
 export default class BusinessService {
@@ -50,9 +49,8 @@ export default class BusinessService {
     return businessTransformer(createdBusiness);
   }
 
-  static async getAllBusinesses(filterArgs): Promise<Business[]> {
-    // TODO: Use filter args
-    const businesses = await prisma.business.findMany({ ...businessQueryArgs });
+  static async getAllBusinesses(): Promise<Business[]> {
+    const businesses = await prisma.business.findMany();
 
     return businesses.map(businessTransformer);
   }
