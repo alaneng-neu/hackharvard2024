@@ -194,27 +194,45 @@ const testBusinesses: Business[] = [
 
 const Search: React.FC = () => {
   const [businesses, setBusinesses] = useState<Business[]>(testBusinesses);
+  const [filteredBusinesses, setFilteredBusinesses] =
+    useState<Business[]>(testBusinesses);
+  const [searchValue, setSearchValue] = useState(""); // Manage search input state
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [isPromotionOn, setIsPromotionOn] = useState(false);
   const categories = useGetBusinessTypes();
 
-  // useEffect(() => {
-  //   fetch("http://localhost:7071/business/search")
-  //     .then((res) => res.json())
-  //     .then((data: Business[]) => {
-  //       setBusinesses(data);
-  //     });
-  // }, []);
+  // State to track if a search has been made
+  const [hasSearched, setHasSearched] = useState(false);
+
+  useEffect(() => {
+    // Filter businesses based on search value and selected options
+    const filtered = businesses.filter((business) => {
+      const matchesSearch = business.name
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
+      const matchesType =
+        selectedOptions.length === 0 ||
+        business.businessTypes.some((type) => selectedOptions.includes(type));
+      return matchesSearch && matchesType;
+    });
+
+    setFilteredBusinesses(filtered);
+    setHasSearched(
+      searchValue.trim() !== "" || selectedOptions.length > 0 || isPromotionOn
+    ); // Update this state based on search input or filters
+  }, [searchValue, businesses, selectedOptions, isPromotionOn]); // Update when search value or selected options change
 
   const resetFilters = () => {
     setSelectedOptions([]);
     setIsPromotionOn(false);
+    setSearchValue(""); // Reset search input as well
+    setHasSearched(false); // Reset search status
   };
 
   return (
     <div>
-      <Navbar />
-      {businesses && (
+      <Navbar searchValue={searchValue} setSearchValue={setSearchValue} />{" "}
+      {filteredBusinesses && ( // Use filteredBusinesses
         <div className="flex justify-center">
           <main className="w-11/12 lg:w-4/5">
             <div className="flex flex-col lg:flex-row lg:justify-between py-6">
@@ -225,7 +243,7 @@ const Search: React.FC = () => {
                   setSelectedOptions={setSelectedOptions}
                   label="Browse Categories"
                   width="80"
-                ></DropdownFilter>
+                />
                 <ToggleFilter
                   label="Promotion"
                   isOn={isPromotionOn}
@@ -240,38 +258,52 @@ const Search: React.FC = () => {
               </button>
             </div>
 
-            <div className="flex justify-center">
-              <h1 className="py-4 text-4xl text-center">
-                Start searching to find local gems!
-              </h1>
-            </div>
+            {!hasSearched &&
+              filteredBusinesses && ( // Only show this section if no search query has been made
+                <div className="flex-col gap-6">
+                  <h1 className="py-4 text-4xl text-center">
+                    Start searching to find local gems!
+                  </h1>
 
-            <div className="flex-col gap-6">
-              <p className="text-xl font-semibold mb-4">Trending</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {businesses.slice(0, 3).map((business) => (
-                  <BusinessCard key={business.id} business={business} />
-                ))}
-              </div>
-            </div>
+                  <div className="flex-col gap-6">
+                    <p className="text-xl font-semibold mb-4">Trending</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {filteredBusinesses.slice(0, 3).map((business) => (
+                        <BusinessCard key={business.id} business={business} />
+                      ))}
+                    </div>
+                  </div>
 
-            <div className="flex-col gap-6 mt-8">
-              <p className="text-xl font-semibold mb-4">Suggestions</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {businesses.slice(3, 6).map((business) => (
-                  <BusinessCard key={business.id} business={business} />
-                ))}
-              </div>
-            </div>
+                  <div className="flex-col gap-6 mt-8">
+                    <p className="text-xl font-semibold mb-4">Suggestions</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {filteredBusinesses.slice(3, 6).map((business) => (
+                        <BusinessCard key={business.id} business={business} />
+                      ))}
+                    </div>
+                  </div>
 
-            <div className="flex-col gap-6 mt-8">
-              <p className="text-xl font-semibold mb-4">Nearby</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {businesses.slice(6, 9).map((business) => (
-                  <BusinessCard key={business.id} business={business} />
-                ))}
+                  <div className="flex-col gap-6 mt-8">
+                    <p className="text-xl font-semibold mb-4">Nearby</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {filteredBusinesses.slice(6, 9).map((business) => (
+                        <BusinessCard key={business.id} business={business} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+            {hasSearched && ( // Render results based on search query
+              <div className="flex-col gap-6">
+                <p className="text-xl font-semibold mb-4">Search Results</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredBusinesses.map((business) => (
+                    <BusinessCard key={business.id} business={business} />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </main>
         </div>
       )}

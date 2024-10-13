@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  searchValue: string; // Add this prop
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>; // Add this prop
+}
+
+const Navbar: React.FC<NavbarProps> = ({ searchValue, setSearchValue }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -18,10 +23,10 @@ const Navbar: React.FC = () => {
 
       {/* Search Bar */}
       <div className="absolute left-1/2 transform -translate-x-1/2 w-2/5 hidden md:block">
-        {" "}
-        {/* Hidden on mobile */}
         <input
           type="text"
+          value={searchValue} // Use the search value from props
+          onChange={(e) => setSearchValue(e.target.value)} // Update the search value on change
           placeholder="Search for Businesses..."
           className="w-full py-2 px-4 rounded-full bg-stone-200 text-black text-sm"
         />
@@ -29,8 +34,6 @@ const Navbar: React.FC = () => {
 
       {/* Login Button */}
       <div className="hidden md:block">
-        {" "}
-        {/* Show on desktop */}
         <button
           className="bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200"
           onClick={() => {
