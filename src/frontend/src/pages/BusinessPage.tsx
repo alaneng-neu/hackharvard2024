@@ -19,7 +19,7 @@ const businessTypeLabels = {
   OTHER: "Other",
 };
 
-export default function BusinessPage() {
+const BusinessPage = () => {
   const { id } = useParams();
   const [business, setBusiness] = useState<Business>();
   const [expandedSections, setExpandedSections] = useState<string[]>([
@@ -70,13 +70,12 @@ export default function BusinessPage() {
             <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
               <div
                 className="px-4 py-5 sm:px-6 flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection("details")}
-              >
+                onClick={() => toggleSection("details")}>
                 <h2 className="text-lg font-medium text-gray-900">
                   Business Details
                 </h2>
                 <span className="text-gray-400">
-                  {expandedSections.includes("details") ? "−" : "+"}
+                  {expandedSections.includes("details") ? "-" : "+"}
                 </span>
               </div>
               {expandedSections.includes("details") && (
@@ -110,13 +109,12 @@ export default function BusinessPage() {
             <div className="bg-white shadow overflow-hidden sm:rounded-lg">
               <div
                 className="px-4 py-5 sm:px-6 flex justify-between items-center cursor-pointer"
-                onClick={() => toggleSection("promotions")}
-              >
+                onClick={() => toggleSection("promotions")}>
                 <h2 className="text-lg font-medium text-gray-900">
                   Current Promotions
                 </h2>
                 <span className="text-gray-400">
-                  {expandedSections.includes("promotions") ? "−" : "+"}
+                  {expandedSections.includes("promotions") ? "-" : "+"}
                 </span>
               </div>
               {expandedSections.includes("promotions") && (
@@ -128,8 +126,7 @@ export default function BusinessPage() {
                         index !== business.promotions.length - 1
                           ? "border-b border-gray-200"
                           : ""
-                      }`}
-                    >
+                      }`}>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           {promotion.type === "PERCENT_DISCOUNT" ? (
@@ -161,10 +158,9 @@ export default function BusinessPage() {
                       onClick={() =>
                         (window.location.href = `/business/${business.id}/promo/create`)
                       }
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600"
-                    >
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600">
                       <Plus className="w-5 h-5 mr-2" />
-                      Create New Coupon
+                      Create New Promo
                     </button>
                   </div>
                 </div>
@@ -178,4 +174,6 @@ export default function BusinessPage() {
       )}
     </div>
   );
-}
+};
+
+export default BusinessPage;

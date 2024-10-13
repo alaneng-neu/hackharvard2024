@@ -1,26 +1,24 @@
 import { useState } from "react";
 import { ArrowLeft, Percent, Tag } from "lucide-react";
 import Navbar from "../components/Navbar";
+import { useAuthenticatedView } from "../hooks/useAuthenticatedView";
+import { PromotionType } from "../../../shared";
+import { useParams } from "react-router-dom";
+import { useAuthenticatedResource } from "../hooks/useAuthenticatedResource";
 
-enum PromotionType {
-  PERCENT_DISCOUNT = "PERCENT_DISCOUNT",
-  VALUE_DISCOUNT = "VALUE_DISCOUNT",
-}
+const CreatePromoPage = () => {
+  useAuthenticatedView();
 
-interface CreateCouponPageProps {
-  businessId: number; // assuming businessId is a number
-}
-
-export default function CreateCouponPage({
-  businessId,
-}: CreateCouponPageProps) {
   const [formData, setFormData] = useState({
     type: PromotionType.PERCENT_DISCOUNT,
     value: "",
     quantity: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [successMessage, setSuccessMessage] = useState<string | null>(null); // State for success message
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const { id } = useParams();
+
+  useAuthenticatedResource(id as string);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -58,16 +56,25 @@ export default function CreateCouponPage({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form submitted:", formData);
-      // Simulate coupon creation and set success message
-      setSuccessMessage(
-        `Successfully created coupon for business ID: ${businessId}`
-      );
-      setFormData({
-        type: PromotionType.PERCENT_DISCOUNT,
-        value: "",
-        quantity: "",
-      }); // Reset form
+      fetch(`http://localhost:7071/business/${id}/promos/new`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then(() => {
+          setSuccessMessage(
+            `Successfully created coupon for business ID: ${id}`
+          );
+          window.history.back();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again.");
+        });
     }
   };
 
@@ -79,13 +86,12 @@ export default function CreateCouponPage({
           <div className="px-4 py-5 sm:p-6">
             <div className="flex items-center mb-6">
               <button
-                onClick={() => window.history.back()} // JavaScript back navigation
-                className="text-green-600 hover:text-green-800 mr-4"
-              >
+                onClick={() => window.history.back()}
+                className="text-green-600 hover:text-green-800 mr-4">
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <h1 className="text-2xl font-bold text-gray-900">
-                Create a Coupon
+                Create a Promo
               </h1>
             </div>
             {successMessage && (
@@ -95,8 +101,7 @@ export default function CreateCouponPage({
               <div>
                 <label
                   htmlFor="type"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                  className="block text-sm font-medium text-gray-700">
                   Discount Type
                 </label>
                 <select
@@ -104,8 +109,7 @@ export default function CreateCouponPage({
                   name="type"
                   value={formData.type}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-md"
-                >
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-md">
                   <option value={PromotionType.PERCENT_DISCOUNT}>
                     Percent Discount
                   </option>
@@ -118,8 +122,7 @@ export default function CreateCouponPage({
               <div>
                 <label
                   htmlFor="value"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                  className="block text-sm font-medium text-gray-700">
                   {formData.type === PromotionType.PERCENT_DISCOUNT
                     ? "Discount Percentage"
                     : "Discount Amount"}
@@ -164,8 +167,7 @@ export default function CreateCouponPage({
               <div>
                 <label
                   htmlFor="quantity"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                  className="block text-sm font-medium text-gray-700">
                   Quantity
                 </label>
                 <input
@@ -185,9 +187,8 @@ export default function CreateCouponPage({
               <div className="flex items-center justify-between">
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                >
-                  Create Coupon
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                  Create Promo
                 </button>
               </div>
             </form>
@@ -196,4 +197,6 @@ export default function CreateCouponPage({
       </div>
     </div>
   );
-}
+};
+
+export default CreatePromoPage;

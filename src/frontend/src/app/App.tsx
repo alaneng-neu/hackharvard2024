@@ -9,7 +9,7 @@ import UserAuthCallback from "../pages/UserAuthCallback";
 import BusinessForm from "../pages/BusinessForm";
 import BusinessPage from "../pages/BusinessPage";
 import UserAccount from "../pages/UserAccount";
-import CreateCouponPage from "../pages/CreateCoupon";
+import CreatePromoPage from "../pages/CreatePromo";
 
 const App: React.FC = () => {
   return (
@@ -24,7 +24,7 @@ const App: React.FC = () => {
         <Route path="/business/:id" element={<BusinessPage />} />
         <Route
           path="/business/:id/promo/create"
-          element={<CreateCouponPage />}
+          element={<CreatePromoPage />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

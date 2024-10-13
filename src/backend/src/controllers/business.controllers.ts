@@ -62,6 +62,7 @@ export default class BusinessController {
     }
   }
 
+  // TODO: Implement frontend
   static async editBusiness(req: Request, res: Response, next: NextFunction) {
     try {
       const businessId = req.params.businessId;
@@ -93,10 +94,12 @@ export default class BusinessController {
 
   static async createPromo(req: Request, res: Response, next: NextFunction) {
     try {
+      const { idToken } = req.cookies;
       const businessId = req.params.businessId;
       const { type, value, quantity } = req.body;
 
       const promo = await BusinessService.createPromo(
+        idToken,
         businessId,
         type,
         value,
