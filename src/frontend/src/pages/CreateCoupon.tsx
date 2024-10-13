@@ -1,19 +1,25 @@
 import { useState } from "react";
 import { ArrowLeft, Percent, Tag } from "lucide-react";
-import Link from "next/link";
 
 enum PromotionType {
   PERCENT_DISCOUNT = "PERCENT_DISCOUNT",
   VALUE_DISCOUNT = "VALUE_DISCOUNT",
 }
 
-export default function CreateCouponPage() {
+interface CreateCouponPageProps {
+  businessId: number; // assuming businessId is a number
+}
+
+export default function CreateCouponPage({
+  businessId,
+}: CreateCouponPageProps) {
   const [formData, setFormData] = useState({
     type: PromotionType.PERCENT_DISCOUNT,
     value: "",
     quantity: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [successMessage, setSuccessMessage] = useState<string | null>(null); // State for success message
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -51,9 +57,16 @@ export default function CreateCouponPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      // Here you would typically send the data to your backend
       console.log("Form submitted:", formData);
-      // Reset form or redirect user after successful submission
+      // Simulate coupon creation and set success message
+      setSuccessMessage(
+        `Successfully created coupon for business ID: ${businessId}`
+      );
+      setFormData({
+        type: PromotionType.PERCENT_DISCOUNT,
+        value: "",
+        quantity: "",
+      }); // Reset form
     }
   };
 
@@ -62,16 +75,19 @@ export default function CreateCouponPage() {
       <div className="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden">
         <div className="px-4 py-5 sm:p-6">
           <div className="flex items-center mb-6">
-            <Link
-              href="/business"
-              className="text-indigo-600 hover:text-indigo-800 mr-4"
+            <button
+              onClick={() => window.history.back()} // JavaScript back navigation
+              className="text-green-600 hover:text-green-800 mr-4"
             >
               <ArrowLeft className="w-5 h-5" />
-            </Link>
+            </button>
             <h1 className="text-2xl font-bold text-gray-900">
               Create a Coupon
             </h1>
           </div>
+          {successMessage && (
+            <div className="mb-4 text-green-600">{successMessage}</div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
@@ -85,7 +101,7 @@ export default function CreateCouponPage() {
                 name="type"
                 value={formData.type}
                 onChange={handleInputChange}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-md"
               >
                 <option value={PromotionType.PERCENT_DISCOUNT}>
                   Percent Discount
@@ -152,7 +168,7 @@ export default function CreateCouponPage() {
                 id="quantity"
                 value={formData.quantity}
                 onChange={handleInputChange}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
                 placeholder="Enter quantity"
               />
               {errors.quantity && (
@@ -163,7 +179,7 @@ export default function CreateCouponPage() {
             <div className="flex items-center justify-between">
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
               >
                 Create Coupon
               </button>
