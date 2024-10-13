@@ -13,9 +13,12 @@
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",
-    "express": "^4.21.1"
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.1",
+    "google-auth-library": "^9.14.2"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.7",
     "@types/express": "^5.0.0",
     "nodemon": "^3.1.7",
     "prisma": "^5.20.0",

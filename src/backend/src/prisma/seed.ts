@@ -45,6 +45,7 @@ async function main() {
           },
         ],
       },
+      googleId: "123",
     },
   });
 
@@ -64,6 +65,7 @@ async function main() {
           },
         ],
       },
+      googleId: "456",
     },
   });
 }
