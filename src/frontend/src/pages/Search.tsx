@@ -207,15 +207,15 @@ const Search: React.FC = () => {
     <div>
       <Navbar />
       <div className="flex justify-center">
-        <main className="w-4/5">
-          <div className="flex justify-between py-6">
-            <div className="flex gap-4">
+        <main className="w-11/12 lg:w-4/5">
+          <div className="flex flex-col lg:flex-row lg:justify-between py-6">
+            <div className="flex flex-col lg:flex-row gap-4">
               <DropdownFilter
                 options={categories}
                 selectedOptions={selectedOptions}
                 setSelectedOptions={setSelectedOptions}
                 label="Browse Categories"
-                width="60"
+                width="80"
               ></DropdownFilter>
               <ToggleFilter
                 label="Promotion"
@@ -239,7 +239,7 @@ const Search: React.FC = () => {
 
           <div className="flex-col gap-6">
             <p className="text-xl font-semibold mb-4">Trending</p>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {businesses.slice(0, 3).map((business) => (
                 <BusinessCard key={business.id} business={business} />
               ))}
@@ -248,7 +248,7 @@ const Search: React.FC = () => {
 
           <div className="flex-col gap-6 mt-8">
             <p className="text-xl font-semibold mb-4">Suggestions</p>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {businesses.slice(3, 6).map((business) => (
                 <BusinessCard key={business.id} business={business} />
               ))}
@@ -257,7 +257,7 @@ const Search: React.FC = () => {
 
           <div className="flex-col gap-6 mt-8">
             <p className="text-xl font-semibold mb-4">Nearby</p>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {businesses.slice(6, 9).map((business) => (
                 <BusinessCard key={business.id} business={business} />
               ))}

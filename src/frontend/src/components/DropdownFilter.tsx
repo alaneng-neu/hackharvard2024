@@ -18,6 +18,15 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Format category names
+  const formatCategoryName = (category: string) => {
+    return category
+      .toLowerCase()
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   // Handler for toggling options
   const handleOptionToggle = (option: string) => {
     setSelectedOptions((prev) =>
@@ -44,13 +53,15 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
     };
   }, []);
 
-  // Only show up to 2 business types
+  // Only display 1 selected option (too long)
   const displayText = () => {
     if (selectedOptions.length === 0) {
       return label;
     }
-    if (selectedOptions.length <= 2) {
-      return selectedOptions.join(", ");
+    if (selectedOptions.length <= 1) {
+      return selectedOptions
+        .map((option) => formatCategoryName(option))
+        .join(", ");
     }
     return `Business Type (${selectedOptions.length} selected)`;
   };
@@ -84,7 +95,7 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
                 checked={selectedOptions.includes(option)}
                 readOnly // Prevent checkbox from being directly modified
               />
-              <span className="ml-2">{option}</span>
+              <span className="ml-2">{formatCategoryName(option)}</span>
             </li>
           ))}
         </ul>
