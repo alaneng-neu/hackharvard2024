@@ -67,9 +67,9 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className={`w-${width} relative`} ref={dropdownRef}>
       <button
-        className={`flex items-center justify-between w-${width} p-2 ${
+        className={`w-full flex items-center justify-between  p-2 ${
           isOpen
             ? "border-l border-r border-t rounded-t-lg"
             : "border rounded-lg"
@@ -81,7 +81,7 @@ const DropdownFilter: React.FC<DropdownFilterProps> = ({
       </button>
       {isOpen && (
         <ul
-          className={`absolute left-0 w-${width} bg-white border border-t-0 border-gray-300 rounded-b-lg max-h-60 overflow-y-auto z-10`}
+          className={`w-full absolute left-0 bg-white border border-t-0 border-gray-300 rounded-b-lg max-h-60 overflow-y-auto z-10`}
           style={{ width: "100%" }} // Ensure dropdown matches the button width
         >
           {options.map((option) => (
